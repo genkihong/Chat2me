@@ -1,35 +1,27 @@
 # Chat2me
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## 安裝套件
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 運行專案(開發環境)
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### 運行專案(正式環境)
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 專案技術
 
-```sh
-npm run lint
-```
+- Vite
+- Vue3 Composition API
+- Pinia
+- axios
+- Bootstrap5
