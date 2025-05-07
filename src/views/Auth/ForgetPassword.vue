@@ -1,39 +1,14 @@
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
-import { toast } from 'vue3-toastify'
 
-const name = ref('')
 const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
 
-const clearForm = () => {
-  name.value = ''
-  email.value = ''
-  password.value = ''
-  confirmPassword.value = ''
-}
-const signup = async () => {
+const onSubmit = () => {
   const authStore = useAuthStore()
-
-  if (password.value !== confirmPassword.value) {
-    toast.error('兩次密碼輸入不一致', {
-      theme: 'colored',
-    })
-    return
-  }
-
-  await authStore.signup({
-    name: name.value,
-    email: email.value,
-    password: password.value,
-  })
-
-  clearForm()
+  authStore.forgetPassword(email.value)
 }
 </script>
-
 <template>
   <div class="auth-bg">
     <div class="container">
@@ -85,19 +60,8 @@ const signup = async () => {
         <div class="col col-md-5">
           <div class="card shadow mt-5 bg-dark text-light">
             <div class="card-body">
-              <h3 class="card-title mb-5 text-center">註冊</h3>
-              <form @submit.prevent="signup">
-                <div class="mb-3">
-                  <label for="name" class="form-label required">名稱</label>
-                  <input
-                    v-model="name"
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    placeholder="請輸入您的名稱"
-                    required
-                  />
-                </div>
+              <h3 class="card-title mb-5 text-center">忘記密碼</h3>
+              <form @submit.prevent="onSubmit">
                 <div class="mb-3">
                   <label for="email" class="form-label required">電子信箱</label>
                   <input
@@ -109,30 +73,11 @@ const signup = async () => {
                     required
                   />
                 </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label required">設定密碼</label>
-                  <input
-                    v-model="password"
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    placeholder="至少8個字元，包含大小寫與數字"
-                    required
-                  />
-                </div>
-                <div class="mb-5">
-                  <label for="confirmPassword" class="form-label required">確認密碼</label>
-                  <input
-                    v-model="confirmPassword"
-                    type="password"
-                    class="form-control"
-                    id="confirmPassword"
-                    placeholder="請再次輸入密碼"
-                    required
-                  />
-                </div>
+                <div class="fs-7 mb-5">您將會收到重設密碼驗證信</div>
                 <div class="d-grid">
-                  <button type="submit" class="btn btn-lg btn-primary rounded-1">註冊</button>
+                  <button type="submit" class="btn btn-lg btn-primary rounded-1">
+                    寄送電子郵件
+                  </button>
                 </div>
               </form>
             </div>
@@ -143,4 +88,4 @@ const signup = async () => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style></style>

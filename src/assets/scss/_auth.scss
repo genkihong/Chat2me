@@ -1,0 +1,11 @@
+.auth-bg {
+  background-image: url('/images/star.jpg');
+  background-size: cover;
+  height: 100vh;
+}
+.required:after {
+  content: '*';
+  color: red;
+  margin-left: 2px;
+  font-size: 16px;
+}

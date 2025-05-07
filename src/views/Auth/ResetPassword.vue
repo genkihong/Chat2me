@@ -1,39 +1,20 @@
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
-import { toast } from 'vue3-toastify'
 
-const name = ref('')
-const email = ref('')
+const route = useRoute()
 const password = ref('')
 const confirmPassword = ref('')
 
-const clearForm = () => {
-  name.value = ''
-  email.value = ''
-  password.value = ''
-  confirmPassword.value = ''
-}
-const signup = async () => {
+const onSubmit = () => {
   const authStore = useAuthStore()
-
-  if (password.value !== confirmPassword.value) {
-    toast.error('兩次密碼輸入不一致', {
-      theme: 'colored',
-    })
-    return
-  }
-
-  await authStore.signup({
-    name: name.value,
-    email: email.value,
-    password: password.value,
+  authStore.resetPassword({
+    token: route.params.token,
+    newPassword: password.value,
   })
-
-  clearForm()
 }
 </script>
-
 <template>
   <div class="auth-bg">
     <div class="container">
@@ -85,32 +66,10 @@ const signup = async () => {
         <div class="col col-md-5">
           <div class="card shadow mt-5 bg-dark text-light">
             <div class="card-body">
-              <h3 class="card-title mb-5 text-center">註冊</h3>
-              <form @submit.prevent="signup">
+              <h3 class="card-title mb-5 text-center">重設密碼</h3>
+              <form @submit.prevent="onSubmit">
                 <div class="mb-3">
-                  <label for="name" class="form-label required">名稱</label>
-                  <input
-                    v-model="name"
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    placeholder="請輸入您的名稱"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label required">電子信箱</label>
-                  <input
-                    v-model="email"
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="請輸入電子信箱"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label required">設定密碼</label>
+                  <label for="password" class="form-label required">設定新密碼</label>
                   <input
                     v-model="password"
                     type="password"
@@ -131,8 +90,9 @@ const signup = async () => {
                     required
                   />
                 </div>
+
                 <div class="d-grid">
-                  <button type="submit" class="btn btn-lg btn-primary rounded-1">註冊</button>
+                  <button type="submit" class="btn btn-lg btn-primary rounded-1">重設密碼</button>
                 </div>
               </form>
             </div>
@@ -143,4 +103,4 @@ const signup = async () => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style></style>
