@@ -13,9 +13,12 @@ export const useAuthStore = defineStore('auth', () => {
   const signup = async (user) => {
     try {
       const res = await apiSignup(user)
-      if (res.status) {
+      toast.success(res.data.message, {
+        theme: 'colored',
+      })
+      setTimeout(() => {
         router.push('/login')
-      }
+      }, 1500)
     } catch (error) {
       if (error.response.status === 400) {
         toast.error(error.response.data.message, {
@@ -32,14 +35,21 @@ export const useAuthStore = defineStore('auth', () => {
   const login = async (user) => {
     try {
       const res = await apiLogin(user)
-      token.value = res.data.token
+
+      token.value = res.data.data.token
       name.value = res.data.user.name
 
       //寫入 localStorage
       localStorage.setItem('token', token.value)
       localStorage.setItem('name', name.value)
 
-      router.push('/')
+      toast.success(res.data.message, {
+        theme: 'colored',
+      })
+
+      setTimeout(() => {
+        router.push('/')
+      }, 1500)
     } catch (error) {
       toast.error(error.response.data.message, {
         theme: 'colored',
