@@ -35,7 +35,7 @@ const signup = async () => {
 </script>
 
 <template>
-  <div class="auth-bg">
+  <div class="auth-bg vh-100 bg-s-cover">
     <div class="container">
       <div class="p-3">
         <svg
@@ -81,12 +81,12 @@ const signup = async () => {
           />
         </svg>
       </div>
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col col-md-5">
-          <div class="card shadow mt-5 bg-dark text-light">
+      <div class="row justify-content-center mt-5">
+        <div class="col-lg-5">
+          <div class="card shadow bg-dark text-light">
             <div class="card-body">
-              <h3 class="card-title mb-5 text-center">註冊</h3>
-              <form @submit.prevent="signup">
+              <h3 class="card-title fw-bold mb-5">建立帳號</h3>
+              <form @submit.prevent="signup" class="mb-5">
                 <div class="mb-3">
                   <label for="name" class="form-label required">名稱</label>
                   <input
@@ -132,12 +132,17 @@ const signup = async () => {
                   />
                 </div>
                 <div class="d-grid">
-                  <button type="submit" class="btn btn-lg btn-primary rounded-1">註冊</button>
+                  <button type="submit" class="btn btn-lg btn-custom rounded-1">註冊</button>
                 </div>
               </form>
+              <div class="text-center">
+                已經有帳號 ? <router-link to="/login">請點此登入</router-link>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="col-lg-7 bg-p-center" style="background-image: url(/images/signup.png)"></div>
       </div>
     </div>
   </div>

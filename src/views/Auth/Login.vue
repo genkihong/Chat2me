@@ -15,7 +15,7 @@ const login = async () => {
 </script>
 
 <template>
-  <div class="auth-bg">
+  <div class="auth-bg vh-100 bg-s-cover">
     <div class="container">
       <div class="p-3">
         <svg
@@ -61,12 +61,12 @@ const login = async () => {
           />
         </svg>
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mt-5">
         <div class="col col-md-5">
-          <div class="card shadow mt-5 bg-dark text-light">
+          <div class="card shadow bg-dark text-light">
             <div class="card-body">
-              <h3 class="card-title mb-5 text-center">登入</h3>
-              <form @submit.prevent="login" class="mb-4">
+              <h3 class="card-title text-center mb-5">登入</h3>
+              <form @submit.prevent="login" class="mb-5">
                 <div class="mb-3">
                   <label for="email" class="form-label required">電子信箱</label>
                   <input
@@ -94,7 +94,7 @@ const login = async () => {
                     忘記密碼 ?
                   </router-link>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg w-100 rounded-1">登入</button>
+                <button type="submit" class="btn btn-custom btn-lg w-100 rounded-1">登入</button>
               </form>
               <div class="text-center">
                 還沒有帳號嗎 ? <router-link to="/signup">請點此註冊</router-link>

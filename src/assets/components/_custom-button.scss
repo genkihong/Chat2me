@@ -1,0 +1,49 @@
+.btn-custom {
+  @include button-variant(
+    //background
+    $blue-120,
+    //border
+    $blue-120,
+    //color
+    $gray-200,
+    //hover-background
+    $blue-130,
+    //hover-border
+    $blue-130,
+    //hover-color
+    $gray-200,
+    //active-background
+    $blue-140,
+    //active-border
+    $blue-140,
+    //active-color
+    $gray-200
+  );
+}
+// .btn-outline-custom {
+//   @include button-variant(
+//     #040811,
+//     #009bff,
+//     #009bff,
+//     #101822,
+//     #009bff,
+//     #e6f9ff,
+//     #040811,
+//     #009bff,
+//     #e6f9ff
+//   );
+// }
+.btn-outline-custom {
+  @include button-outline-variant(
+    //color,
+    $blue-120,
+    //color-hover
+    $gray-200,
+    //active-background
+    $gray-910,
+    //active-border
+    $blue-120,
+    //active-color
+    $gray-200
+  );
+}

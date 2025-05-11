@@ -10,7 +10,7 @@ const onSubmit = () => {
 }
 </script>
 <template>
-  <div class="auth-bg">
+  <div class="auth-bg vh-100 bg-s-cover">
     <div class="container">
       <div class="p-3">
         <svg
@@ -56,11 +56,11 @@ const onSubmit = () => {
           />
         </svg>
       </div>
-      <div class="row justify-content-center align-items-center h-100">
+      <div class="row justify-content-center mt-5">
         <div class="col col-md-5">
-          <div class="card shadow mt-5 bg-dark text-light">
+          <div class="card shadow bg-dark text-light">
             <div class="card-body">
-              <h3 class="card-title mb-5 text-center">忘記密碼</h3>
+              <h3 class="card-title text-center mb-5">忘記密碼</h3>
               <form @submit.prevent="onSubmit">
                 <div class="mb-3">
                   <label for="email" class="form-label required">電子信箱</label>
@@ -75,7 +75,7 @@ const onSubmit = () => {
                 </div>
                 <div class="fs-7 mb-5">您將會收到重設密碼驗證信</div>
                 <div class="d-grid">
-                  <button type="submit" class="btn btn-lg btn-primary rounded-1">
+                  <button type="submit" class="btn btn-lg btn-custom rounded-1">
                     寄送電子郵件
                   </button>
                 </div>

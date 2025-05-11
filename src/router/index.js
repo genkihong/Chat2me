@@ -17,32 +17,69 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: () => import('../views/Auth/Login.vue'),
+      component: () => import('../views/auth/Login.vue'),
     },
     {
       path: '/signup',
       name: 'Signup',
-      component: () => import('../views/Auth/Signup.vue'),
+      component: () => import('../views/auth/Signup.vue'),
     },
     {
       path: '/forget-password',
       name: 'ForgetPassword',
-      component: () => import('../views/Auth/ForgetPassword.vue'),
+      component: () => import('../views/auth/ForgetPassword.vue'),
     },
     {
       path: '/reset-password/:token?',
       name: 'ResetPassword',
-      component: () => import('../views/Auth/ResetPassword.vue'),
+      component: () => import('../views/auth/ResetPassword.vue'),
+    },
+    {
+      path: '/user',
+      component: () => import('../views/user/Index.vue'),
+      children: [
+        {
+          path: 'settings', // /user
+          name: 'User',
+          component: () => import('../views/user/Settings.vue'),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'profile', // /user/profile
+          name: 'Profile',
+          component: () => import('../views/user/Profile.vue'),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'message', // /user/message
+          name: 'Message',
+          component: () => import('../views/user/Message.vue'),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'article', // /user/article
+          name: 'Article',
+          component: () => import('../views/user/Article.vue'),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'forum', // /user/forum
+          name: 'Forum',
+          component: () => import('../views/user/Forum.vue'),
+          meta: { requiresAuth: true },
+        },
+      ],
     },
   ],
 })
 
 router.beforeEach(async (to) => {
   const authStore = useAuthStore()
-  const isAuthenticated = authStore.token ?? undefined
+  const isLoggedIn = !!authStore.token
+  const pathName = ['Login', 'SignUp', 'ForgetPassword', 'ResetPassword']
 
-  if (to.name !== 'Login' || to.name !== 'Signup') {
-    if (to.meta.requiresAuth && !isAuthenticated) {
+  if (!pathName.includes[to.name]) {
+    if (to.meta.requiresAuth && !isLoggedIn) {
       // 此路由需要授权，请检查是否已登录
       // 如果没有，则重定向到登录页面
       return {

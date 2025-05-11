@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import { apiSignup, apiLogin, apiForgetPassword, apiResetPassword } from '@/api/auth'
@@ -6,13 +6,17 @@ import { toast } from 'vue3-toastify'
 
 export const useAuthStore = defineStore('auth', () => {
   const router = useRouter()
-  const token = ref(localStorage.getItem('token') || '')
-  const name = ref(localStorage.getItem('name') || '')
+  const token = ref(localStorage.getItem('token') ?? null)
+  const user = reactive({
+    id: JSON.parse(localStorage.getItem('user'))?.id || null,
+    email: JSON.parse(localStorage.getItem('user'))?.email || null,
+    name: JSON.parse(localStorage.getItem('user'))?.name || null,
+  })
 
   //註冊
-  const signup = async (user) => {
+  const signup = async (data) => {
     try {
-      const res = await apiSignup(user)
+      const res = await apiSignup(data)
       toast.success(res.data.message, {
         theme: 'colored',
       })
@@ -20,28 +24,26 @@ export const useAuthStore = defineStore('auth', () => {
         router.push('/login')
       }, 1500)
     } catch (error) {
-      if (error.response.status === 400) {
-        toast.error(error.response.data.message, {
-          theme: 'colored',
-        })
-      } else if (error.response.status === 409) {
-        toast.error(error.response.data.message, {
-          theme: 'colored',
-        })
-      }
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
     }
   }
   //登入
-  const login = async (user) => {
+  const login = async (data) => {
     try {
-      const res = await apiLogin(user)
-
+      const res = await apiLogin(data)
       token.value = res.data.data.token
-      name.value = res.data.user.name
+      //取得使用者資訊
+      const payload = JSON.parse(window.atob(token.value.split('.')[1]))
+
+      user.id = payload.id
+      user.name = payload.name
+      user.email = payload.email
 
       //寫入 localStorage
       localStorage.setItem('token', token.value)
-      localStorage.setItem('name', name.value)
+      localStorage.setItem('user', JSON.stringify(user))
 
       toast.success(res.data.message, {
         theme: 'colored',
@@ -85,6 +87,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   return {
+    user,
+    token,
     signup,
     login,
     logout,

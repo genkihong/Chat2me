@@ -13,7 +13,7 @@ app.use(createPinia())
 app.use(router)
 
 app.use(Vue3Toastify, {
-  autoClose: 3000, //自動關閉時間
+  autoClose: 2000, //自動關閉時間
   // position: toast.POSITION.TOP_CENTER, //提示窗位置
 })
 app.mount('#app')

@@ -1,9 +1,9 @@
 import { useAuthStore } from '@/stores/authStore'
 import axios from 'axios'
 
-// axios.defaults.baseURL = 'http://chat2me.ubddns.org/api/v1';
+// axios.defaults.baseURL = '';
 const instance = axios.create({
-  baseURL: 'http://chat2me.ubddns.org:3000/api/v1',
+  baseURL: `${import.meta.env.VITE_API_URL}/api/v1`,
 })
 
 instance.interceptors.request.use(
