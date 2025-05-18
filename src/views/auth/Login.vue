@@ -65,7 +65,7 @@ const login = async () => {
         <div class="col col-md-5">
           <div class="card shadow bg-dark text-light">
             <div class="card-body">
-              <h3 class="card-title text-center mb-5">登入</h3>
+              <h3 class="card-title fw-bold text-center mb-5">登入</h3>
               <form @submit.prevent="login" class="mb-5">
                 <div class="mb-3">
                   <label for="email" class="form-label required">電子信箱</label>

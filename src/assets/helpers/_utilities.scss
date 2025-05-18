@@ -865,6 +865,7 @@ $utilities: map-merge(
         values: $zindex-levels,
       ),
     // scss-docs-end utils-zindex
+    // 自定義
     'background-size': (
         property: background-size,
         class: bg-s,

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useAuthStore } from '@/stores/authStore'
 import { storeToRefs } from 'pinia'
@@ -8,19 +8,53 @@ import DOMPurify from 'dompurify'
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 
-const sanitized = computed(() => DOMPurify.sanitize(userStore.user.description || ''))
+const fileInput = ref(null)
+const selectedFile = ref(null)
+const previewUrl = ref(null)
+//預防XSS
+const sanitized = computed(() => DOMPurify.sanitize(user.value.description || ''))
 
+//點選上傳圖片按鈕
+const triggerFileInput = () => {
+  fileInput.value.click()
+}
+//選擇上傳圖片
+const handleFileChange = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    selectedFile.value = file
+    previewUrl.value = URL.createObjectURL(file)
+  }
+}
+//上傳圖片
+const uploadImage = async () => {
+  const formData = new FormData()
+  formData.append('image', selectedFile.value)
+  // console.log(formData.get('image'))
+  await userStore.uploadImage(formData)
+}
+//取得資料
 const getUser = async () => {
   const authStore = useAuthStore()
   const userId = authStore.user.id
   await userStore.getUser(userId)
 }
+//更新資料
 const updateUser = async () => {
   await userStore.updateUser({
     id: user.value.id,
     name: user.value.name,
     description: sanitized.value,
   })
+}
+//儲存設定
+const handleSubmit = async () => {
+  //有上傳圖片時
+  if (selectedFile.value) {
+    await Promise.allSettled([uploadImage(), updateUser()])
+  } else {
+    await updateUser()
+  }
   await getUser()
 }
 onMounted(() => {
@@ -29,81 +63,110 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="card shadow bg-dark text-light">
-    <h3 class="card-title mb-4">個人設定</h3>
-    <div class="text-center ms-5 mb-5 position-relative">
-      <img :src="user.imageUrl" alt="" class="rounded-circle avator" />
-
-      <button class="btn position-absolute btn-avator">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+  <div class="col-lg-6 offset-lg-1">
+    <div class="card bg-dark text-light">
+      <h3 class="mb-5">個人設定</h3>
+      <div class="text-center mb-5">
+        <img :src="previewUrl" alt="avator" class="rounded-circle avator-img" v-if="previewUrl" />
+        <img :src="user.imageUrl" alt="avator" class="rounded-circle avator-img" v-else />
+        <!-- 上傳圖片按鈕 -->
+        <button
+          class="position-relative btn-upload btn text-white rounded-circle opacity-50 p-2 bg-dark"
+          @click="triggerFileInput"
         >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M7.598 4.487C7.865 3.177 9.031 2.25 10.366 2.25H13.634C14.969 2.25 16.134 3.177 16.402 4.487C16.4315 4.63125 16.5088 4.76137 16.6212 4.85642C16.7337 4.95147 16.8748 5.00591 17.022 5.011H17.055C18.458 5.073 19.536 5.245 20.436 5.836C21.003 6.208 21.491 6.686 21.871 7.245C22.344 7.939 22.552 8.737 22.652 9.701C22.75 10.644 22.75 11.825 22.75 13.321V13.406C22.75 14.902 22.75 16.084 22.652 17.026C22.552 17.99 22.344 18.788 21.871 19.483C21.4889 20.0416 21.0015 20.5202 20.436 20.892C19.733 21.353 18.926 21.557 17.948 21.654C16.99 21.75 15.789 21.75 14.263 21.75H9.737C8.211 21.75 7.01 21.75 6.052 21.654C5.074 21.557 4.267 21.354 3.564 20.892C2.99844 20.5199 2.51099 20.0409 2.129 19.482C1.656 18.788 1.448 17.99 1.348 17.026C1.25 16.084 1.25 14.902 1.25 13.406V13.321C1.25 11.825 1.25 10.644 1.348 9.701C1.448 8.737 1.656 7.939 2.129 7.245C2.51099 6.68607 2.99844 6.20711 3.564 5.835C4.464 5.245 5.542 5.073 6.945 5.012L6.962 5.011H6.978C7.12516 5.00591 7.26632 4.95147 7.37879 4.85642C7.49125 4.76137 7.56846 4.63125 7.598 4.487ZM10.366 3.75C9.726 3.75 9.189 4.193 9.068 4.786C8.873 5.746 8.021 6.502 6.996 6.511C5.648 6.571 4.926 6.736 4.386 7.09C3.98545 7.35393 3.64004 7.69322 3.369 8.089C3.093 8.494 2.927 9.013 2.839 9.856C2.751 10.712 2.75 11.816 2.75 13.364C2.75 14.912 2.75 16.015 2.84 16.871C2.927 17.714 3.093 18.233 3.37 18.639C3.638 19.033 3.983 19.373 4.387 19.638C4.804 19.911 5.338 20.076 6.201 20.162C7.075 20.249 8.201 20.25 9.778 20.25H14.222C15.798 20.25 16.924 20.25 17.799 20.162C18.662 20.076 19.196 19.912 19.613 19.638C20.017 19.373 20.363 19.033 20.631 18.638C20.907 18.233 21.073 17.714 21.161 16.871C21.249 16.015 21.25 14.911 21.25 13.364C21.25 11.817 21.25 10.712 21.16 9.856C21.073 9.013 20.907 8.494 20.63 8.089C20.3591 7.69286 20.0136 7.35322 19.613 7.089C19.075 6.736 18.353 6.571 17.003 6.511C15.979 6.501 15.127 5.747 14.932 4.786C14.868 4.49027 14.7039 4.22569 14.4674 4.03694C14.2309 3.84819 13.9366 3.74684 13.634 3.75H10.366ZM12 10.75C11.4033 10.75 10.831 10.9871 10.409 11.409C9.98705 11.831 9.75 12.4033 9.75 13C9.75 13.5967 9.98705 14.169 10.409 14.591C10.831 15.0129 11.4033 15.25 12 15.25C12.5967 15.25 13.169 15.0129 13.591 14.591C14.0129 14.169 14.25 13.5967 14.25 13C14.25 12.4033 14.0129 11.831 13.591 11.409C13.169 10.9871 12.5967 10.75 12 10.75ZM8.25 13C8.25 12.0054 8.64509 11.0516 9.34835 10.3483C10.0516 9.64509 11.0054 9.25 12 9.25C12.9946 9.25 13.9484 9.64509 14.6517 10.3483C15.3549 11.0516 15.75 12.0054 15.75 13C15.75 13.9946 15.3549 14.9484 14.6517 15.6517C13.9484 16.3549 12.9946 16.75 12 16.75C11.0054 16.75 10.0516 16.3549 9.34835 15.6517C8.64509 14.9484 8.25 13.9946 8.25 13ZM17.25 10C17.25 9.80109 17.329 9.61032 17.4697 9.46967C17.6103 9.32902 17.8011 9.25 18 9.25H19C19.1989 9.25 19.3897 9.32902 19.5303 9.46967C19.671 9.61032 19.75 9.80109 19.75 10C19.75 10.1989 19.671 10.3897 19.5303 10.5303C19.3897 10.671 19.1989 10.75 19 10.75H18C17.8011 10.75 17.6103 10.671 17.4697 10.5303C17.329 10.3897 17.25 10.1989 17.25 10Z"
-            fill="#A5BFCF"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            fill="currentColor"
+            class="bi bi-camera"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"
+            />
+            <path
+              d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
+            />
+          </svg>
+        </button>
+        <input
+          type="file"
+          class="d-none"
+          @change="handleFileChange"
+          accept="image/*"
+          ref="fileInput"
+        />
+      </div>
+      <form @submit.prevent="handleSubmit">
+        <div class="row mb-3">
+          <label for="userId" class="col-sm-2 col-form-label">編號</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control bg-dark"
+              id="userId"
+              v-model="user.id"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="name" class="col-sm-2 col-form-label">名稱</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" v-model="user.name" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="email" class="col-sm-2 col-form-label">電子信箱</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control bg-dark"
+              id="email"
+              v-model="user.email"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="descrption" class="col-sm-2 col-form-label">自我介紹</label>
+          <div class="col-sm-10">
+            <textarea
+              type="text"
+              class="form-control"
+              id="descrption"
+              rows="3"
+              v-model="user.description"
+            />
+          </div>
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-custom rounded-1 px-3">儲存</button>
+        </div>
+      </form>
     </div>
-    <form @submit.prevent="updateUser">
-      <div class="row mb-3">
-        <label for="userId" class="col-sm-2 col-form-label">編號</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control bg-dark" id="userId" v-model="user.id" readonly />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="name" class="col-sm-2 col-form-label">名稱</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="name" v-model="user.name" />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="email" class="col-sm-2 col-form-label">電子信箱</label>
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control bg-dark"
-            id="email"
-            v-model="user.email"
-            readonly
-          />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="descrption" class="col-sm-2 col-form-label">自我介紹</label>
-        <div class="col-sm-10">
-          <textarea
-            type="text"
-            class="form-control"
-            id="descrption"
-            rows="3"
-            v-model="user.description"
-          />
-        </div>
-      </div>
-      <div class="text-end">
-        <button type="submit" class="btn btn-custom rounded-1">儲存</button>
-      </div>
-    </form>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.avator {
+.avator-img {
   width: 150px;
   height: 150px;
+  object-fit: cover;
+  object-position: center;
+  transform: translateX(50%);
 }
-.btn-avator {
-  bottom: 0;
-  right: 33%;
+
+.btn-upload {
+  top: 60px;
+  left: 30px;
+
+  &:active {
+    border-color: #040811;
+  }
 }
+
 textarea {
   resize: none;
 }

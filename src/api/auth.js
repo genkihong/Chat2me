@@ -1,4 +1,4 @@
-import http from '@/service/http'
+import http from '@/service'
 
 //註冊
 export const apiSignup = (data) => http.post('/auth/signup', data)

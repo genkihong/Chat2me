@@ -1229,7 +1229,7 @@ $nav-pills-link-active-bg: $component-active-bg !default;
 
 $nav-underline-gap: 1rem !default;
 $nav-underline-border-width: 0.125rem !default;
-$nav-underline-link-active-color: var(--#{$prefix}emphasis-color) !default;
+$nav-underline-link-active-color: $blue-120; //var(--#{$prefix}emphasis-color) !default;
 // scss-docs-end nav-variables
 
 // Navbar

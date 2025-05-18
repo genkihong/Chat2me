@@ -1,6 +1,14 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { apiUser, apiProfile, apiArticle, apiForum, apiMessage, apiUpdateUser } from '@/api/user'
+import {
+  apiGetUser,
+  apiProfile,
+  apiArticle,
+  apiForum,
+  apiMessage,
+  apiUpdateUser,
+  apiUpload,
+} from '@/api/user'
 import { toast } from 'vue3-toastify'
 
 export const useUserStore = defineStore('user', () => {
@@ -11,15 +19,19 @@ export const useUserStore = defineStore('user', () => {
     imageUrl: null,
     description: null,
   })
-
+  //取得資料
   const getUser = async (id) => {
     try {
-      const res = await apiUser(id)
+      const res = await apiGetUser(id)
       Object.assign(user, res.data.data)
+      user.imageUrl = user.imageUrl.includes('uploads')
+        ? import.meta.env.VITE_API_URL.concat(user.imageUrl)
+        : `https://fakeimg.pl/150x150/`
     } catch (error) {
       console.log(error)
     }
   }
+  //更新資料
   const updateUser = async ({ id, name, description }) => {
     try {
       const res = await apiUpdateUser(id, { name, description })
@@ -32,5 +44,16 @@ export const useUserStore = defineStore('user', () => {
       })
     }
   }
-  return { user, getUser, updateUser }
+  //上傳圖片
+  const uploadImage = async (formData) => {
+    try {
+      console.log(formData.get('image'))
+      const res = await apiUpload(formData)
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
+    }
+  }
+  return { user, getUser, updateUser, uploadImage }
 })
