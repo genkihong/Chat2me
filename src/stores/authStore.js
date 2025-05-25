@@ -50,7 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
       })
 
       setTimeout(() => {
-        router.push('/login')
+        router.push('/')
       }, 1000)
     } catch (error) {
       toast.error(error.response.data.message, {
@@ -65,7 +65,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.name = null
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    router.push('/')
+    router.push('/login')
   }
   //忘記密碼
   const forgetPassword = async (email) => {
