@@ -78,7 +78,7 @@ router.beforeEach(async (to) => {
   const isLoggedIn = !!authStore.token
   const pathName = ['Login', 'SignUp', 'ForgetPassword', 'ResetPassword']
 
-  if (!pathName.includes[to.name]) {
+  if (!pathName.includes(to.name)) {
     if (to.meta.requiresAuth && !isLoggedIn) {
       // 此路由需要授权，请检查是否已登录
       // 如果没有，则重定向到登录页面

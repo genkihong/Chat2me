@@ -9,8 +9,8 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') ?? null)
   const user = reactive({
     id: JSON.parse(localStorage.getItem('user'))?.id || null,
-    email: JSON.parse(localStorage.getItem('user'))?.email || null,
     name: JSON.parse(localStorage.getItem('user'))?.name || null,
+    // email: JSON.parse(localStorage.getItem('user'))?.email || null,
   })
 
   //註冊
@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       user.id = payload.id
       user.name = payload.name
-      user.email = payload.email
+      // user.email = payload.email
 
       //寫入 localStorage
       localStorage.setItem('token', token.value)
@@ -50,8 +50,8 @@ export const useAuthStore = defineStore('auth', () => {
       })
 
       setTimeout(() => {
-        router.push('/')
-      }, 1500)
+        router.push('/login')
+      }, 1000)
     } catch (error) {
       toast.error(error.response.data.message, {
         theme: 'colored',
@@ -60,9 +60,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
   //登出
   const logout = () => {
+    token.value = null
+    user.id = null
+    user.name = null
     localStorage.removeItem('token')
-    localStorage.removeItem('name')
-    router.push('/login')
+    localStorage.removeItem('user')
+    router.push('/')
   }
   //忘記密碼
   const forgetPassword = async (email) => {

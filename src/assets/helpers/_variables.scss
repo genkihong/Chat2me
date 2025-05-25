@@ -320,6 +320,7 @@ $theme-colors: (
   // 'primary03': #007acc,
   'primary': $primary,
   'secondary': $secondary,
+  'secondary01': #a5bfcf,
   'success': $success,
   'info': $info,
   'warning': $warning,
@@ -434,6 +435,7 @@ $spacers: (
 $position-values: (
   0: 0,
   50: 50%,
+  90: 90%,
   100: 100%,
 ) !default;
 // scss-docs-end position-map
@@ -1304,7 +1306,7 @@ $dropdown-link-hover-color: $dropdown-link-color !default;
 $dropdown-link-hover-bg: var(--#{$prefix}tertiary-bg) !default;
 
 $dropdown-link-active-color: $component-active-color !default;
-$dropdown-link-active-bg: $component-active-bg !default;
+$dropdown-link-active-bg: $gray-905; //$component-active-bg !default;
 
 $dropdown-link-disabled-color: var(--#{$prefix}tertiary-color) !default;
 
