@@ -5,7 +5,7 @@
     <div class="article-body px-2 py-3">
       <div class="d-flex align-items-center mb-4">
         <div class="me-2">
-          <img src="https://fakeimg.pl/50x50/" class="rounded-circle" alt="" />
+          <img src="https://placehold.co/50x50/png" class="rounded-circle" alt="image" />
         </div>
         <div>
           <h6 class="text-secondary01 mb-1">美食板</h6>

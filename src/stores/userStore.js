@@ -26,7 +26,7 @@ export const useUserStore = defineStore('user', () => {
       Object.assign(user, res.data.data)
       user.imageUrl = user.imageUrl.includes('uploads')
         ? import.meta.env.VITE_API_URL.concat(`/${user.imageUrl}`)
-        : `https://fakeimg.pl/150x150/`
+        : `https://placehold.co/150x150/png`
     } catch (error) {
       console.log(error)
     }

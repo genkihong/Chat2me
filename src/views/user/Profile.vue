@@ -69,7 +69,7 @@ const uploadImage = async () => {
             />
             <!-- 個人圖片 -->
             <img
-              src="https://fakeimg.pl/50x50"
+              src="https://placehold.co/150x150/png"
               alt="avator"
               class="rounded-circle avator-img"
               v-else
@@ -133,7 +133,7 @@ const uploadImage = async () => {
           <div class="tab-pane active px-2 py-3" id="followed" role="tabpanel" tabindex="0">
             <div class="d-flex mb-3">
               <div class="me-2">
-                <img src="https://fakeimg.pl/250x100/" class="rounded-circle" alt="..." />
+                <img src="https://placehold.co/50x50/png" class="rounded-circle" alt="..." />
               </div>
               <div class="d-flex w-100">
                 <div class="me-auto">
