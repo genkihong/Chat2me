@@ -1,45 +1,33 @@
 <script setup>
 import { useAuthStore } from '@/stores/authStore'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const authStore = useAuthStore()
-const isLoggedIn = !!authStore.token
 
 const logout = () => {
   authStore.logout()
+  router.push('/')
 }
 </script>
 
 <template>
   <!-- navbar -->
-  <nav class="navbar navbar-expand-lg bg-dark mb-3">
+  <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
       <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
+        data-bs-target="#navbarContent"
+        aria-controls="navbarContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M3 6H21M3 12H21M3 18H21"
-            stroke="#708090"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img src="@/assets/images/burger.png" alt="burger" width="24" height="24" />
       </button>
       <!-- Logo -->
-      <router-link to="/" class="navbar-brand">
+      <router-link to="/" class="navbar-brand me-0">
         <svg
           width="136"
           height="32"
@@ -84,256 +72,266 @@ const logout = () => {
         </svg>
       </router-link>
       <!-- 手機版選單 -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-block d-lg-none">
-          <li class="nav-item">
-            <router-link to="/user/profile" class="nav-link">
-              <span class="me-2">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17.5 11.875C17.5 12.538 17.2366 13.1739 16.7678 13.6428C16.2989 14.1116 15.663 14.375 15 14.375C14.337 14.375 13.7011 14.1116 13.2322 13.6428C12.7634 13.1739 12.5 12.538 12.5 11.875C12.5 11.212 12.7634 10.5761 13.2322 10.1072C13.7011 9.63839 14.337 9.375 15 9.375C15.663 9.375 16.2989 9.63839 16.7678 10.1072C17.2366 10.5761 17.5 11.212 17.5 11.875ZM10 19C10 20 11 20 11 20H19C19 20 20 20 20 19C20 18 19 15 15 15C11 15 10 18 10 19Z"
-                    fill="#A5BFCF"
-                  />
-                  <path
-                    d="M2.5 2.5C1.83696 2.5 1.20107 2.76339 0.732233 3.23223C0.263392 3.70107 0 4.33696 0 5L0 15C0 15.663 0.263392 16.2989 0.732233 16.7678C1.20107 17.2366 1.83696 17.5 2.5 17.5H9.05375C9.20625 17.0925 9.4225 16.665 9.71125 16.25H2.5C2.16848 16.25 1.85054 16.1183 1.61612 15.8839C1.3817 15.6495 1.25 15.3315 1.25 15V5C1.25 4.66848 1.3817 4.35054 1.61612 4.11612C1.85054 3.8817 2.16848 3.75 2.5 3.75H17.5C17.8315 3.75 18.1495 3.8817 18.3839 4.11612C18.6183 4.35054 18.75 4.66848 18.75 5V14.7625C19.1912 15.05 19.57 15.3825 19.8875 15.7413C19.9625 15.5071 20 15.26 20 15V5C20 4.33696 19.7366 3.70107 19.2678 3.23223C18.7989 2.76339 18.163 2.5 17.5 2.5H2.5Z"
-                    fill="#A5BFCF"
-                  />
-                </svg>
-              </span>
-              我的個人牆
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/user/message" class="nav-link">
-              <span class="me-2">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M4.375 5C3.68464 5 3.125 5.55964 3.125 6.25V6.80123L9.44125 9.95935C9.61471 10.046 9.80609 10.0912 10 10.0912C10.1939 10.0912 10.3852 10.0461 10.5586 9.95942L16.875 6.80123V6.25C16.875 5.55964 16.3154 5 15.625 5H4.375ZM16.875 8.19877L11.1176 11.0775C10.7706 11.2509 10.3879 11.3412 10 11.3412C9.61209 11.3412 9.2295 11.2509 8.8825 11.0775L3.125 8.19877V13.75C3.125 14.4404 3.68464 15 4.375 15H15.625C16.3154 15 16.875 14.4404 16.875 13.75V8.19877ZM1.875 6.25C1.875 4.86929 2.99429 3.75 4.375 3.75H15.625C17.0057 3.75 18.125 4.86929 18.125 6.25V13.75C18.125 15.1307 17.0057 16.25 15.625 16.25H4.375C2.99429 16.25 1.875 15.1307 1.875 13.75V6.25Z"
-                    fill="#A5BFCF"
-                  />
-                </svg>
-              </span>
-              我的訊息
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/user/forum" class="nav-link">
-              <span class="me-2">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M9.16699 3.33268C8.83869 3.33268 8.5136 3.39735 8.21028 3.52298C7.90697 3.64862 7.63137 3.83277 7.39923 4.06492C7.16708 4.29706 6.98293 4.57266 6.85729 4.87597C6.73166 5.17929 6.66699 5.50438 6.66699 5.83268C6.66699 6.16099 6.73166 6.48608 6.85729 6.78939C6.98293 7.09271 7.16708 7.3683 7.39923 7.60045C7.63137 7.8326 7.90697 8.01675 8.21028 8.14238C8.5136 8.26802 8.83869 8.33268 9.16699 8.33268C9.83003 8.33268 10.4659 8.06929 10.9348 7.60045C11.4036 7.13161 11.667 6.49572 11.667 5.83268C11.667 5.16964 11.4036 4.53376 10.9348 4.06492C10.4659 3.59607 9.83003 3.33268 9.16699 3.33268ZM5.00033 5.83268C5.00033 4.72761 5.43931 3.66781 6.22071 2.8864C7.00212 2.105 8.06192 1.66602 9.16699 1.66602C10.2721 1.66602 11.3319 2.105 12.1133 2.8864C12.8947 3.66781 13.3337 4.72761 13.3337 5.83268C13.3337 6.93775 12.8947 7.99756 12.1133 8.77896C11.3319 9.56036 10.2721 9.99935 9.16699 9.99935C8.06192 9.99935 7.00212 9.56036 6.22071 8.77896C5.43931 7.99756 5.00033 6.93775 5.00033 5.83268ZM3.67783 14.6668C3.40866 15.0085 3.33366 15.2668 3.33366 15.416C3.33366 15.5177 3.36449 15.6252 3.54616 15.771C3.75366 15.9377 4.11449 16.1102 4.66616 16.256C5.76449 16.5477 7.34283 16.666 9.16699 16.666C9.35199 16.666 9.53477 16.6646 9.71533 16.6618C9.93634 16.6589 10.1495 16.7438 10.3079 16.898C10.4663 17.0521 10.5569 17.2629 10.5599 17.4839C10.5629 17.7049 10.478 17.9181 10.3238 18.0765C10.1696 18.2349 9.95884 18.3255 9.73783 18.3285C9.54894 18.3313 9.35866 18.3327 9.16699 18.3327C7.30949 18.3327 5.55449 18.216 4.23949 17.8677C3.58533 17.6943 2.96949 17.446 2.50283 17.071C2.00866 16.6743 1.66699 16.1202 1.66699 15.416C1.66699 14.7602 1.96533 14.1468 2.37033 13.6335C2.78199 13.1127 3.35116 12.6335 4.01866 12.2252C5.35449 11.4118 7.17116 10.8327 9.16699 10.8327C9.53977 10.8327 9.90533 10.8521 10.2637 10.891C10.4835 10.9143 10.685 11.024 10.8239 11.1959C10.9629 11.3678 11.0278 11.5879 11.0045 11.8077C10.9812 12.0275 10.8715 12.229 10.6996 12.3679C10.5277 12.5069 10.3076 12.5718 10.0878 12.5485C9.78727 12.5157 9.48033 12.4993 9.16699 12.4993C7.48116 12.4993 5.96449 12.991 4.88699 13.6485C4.34783 13.9768 3.94033 14.3335 3.67783 14.6668ZM18.0903 13.3893C18.2421 13.2322 18.3261 13.0217 18.3242 12.8032C18.3223 12.5847 18.2347 12.3757 18.0802 12.2212C17.9257 12.0667 17.7167 11.979 17.4982 11.9771C17.2797 11.9752 17.0692 12.0592 16.912 12.211L14.2603 14.8627L13.082 13.6844C12.9248 13.5326 12.7143 13.4486 12.4958 13.4505C12.2773 13.4524 12.0683 13.54 11.9138 13.6945C11.7593 13.849 11.6717 14.058 11.6698 14.2765C11.6679 14.495 11.7519 14.7055 11.9037 14.8627L13.612 16.571C13.6971 16.6562 13.7982 16.7237 13.9094 16.7698C14.0207 16.8159 14.1399 16.8397 14.2603 16.8397C14.3807 16.8397 14.5 16.8159 14.6112 16.7698C14.7225 16.7237 14.8235 16.6562 14.9087 16.571L18.0903 13.3893Z"
-                    fill="#A5BFCF"
-                  />
-                </svg>
-              </span>
-              我的追蹤
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/user/article" class="nav-link">
-              <span class="me-2">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 12 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.1338 16.291C10.9976 16.2884 10.8647 16.2482 10.7499 16.1749L5.99986 12.8624L1.24986 16.1749C1.14494 16.2388 1.02448 16.2726 0.901646 16.2726C0.778815 16.2726 0.65835 16.2388 0.553432 16.1749C0.450677 16.122 0.363617 16.043 0.300946 15.9458C0.238276 15.8487 0.202189 15.7368 0.196289 15.6214V3.12137C0.196289 2.47017 0.454978 1.84564 0.915446 1.38517C1.37592 0.924704 2.00045 0.666016 2.65165 0.666016H9.34807C9.99928 0.666016 10.6238 0.924704 11.0843 1.38517C11.5447 1.84564 11.8034 2.47017 11.8034 3.12137V15.6214C11.8039 15.7429 11.7708 15.8623 11.7078 15.9663C11.6448 16.0702 11.5543 16.1548 11.4463 16.2107C11.3505 16.2632 11.243 16.2908 11.1338 16.291ZM5.99986 11.3803C6.13669 11.3789 6.27068 11.4194 6.38379 11.4964L10.4641 14.3357V3.12137C10.4641 2.82537 10.3466 2.54149 10.1373 2.33219C9.92795 2.12289 9.64408 2.0053 9.34807 2.0053H2.65165C2.35565 2.0053 2.07177 2.12289 1.86246 2.33219C1.65316 2.54149 1.53557 2.82537 1.53557 3.12137V14.3357L5.61593 11.4964C5.72904 11.4194 5.86303 11.3789 5.99986 11.3803Z"
-                    fill="#A5BFCF"
-                  />
-                </svg>
-              </span>
-              我的收藏
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/user/settings" class="nav-link">
-              <span class="me-2">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.7325 1.25C11.8648 1.25 11.9937 1.292 12.1007 1.36995C12.2076 1.4479 12.287 1.55778 12.3275 1.68375L13.015 3.82C13.3038 3.96125 13.58 4.12 13.8438 4.29875L16.0388 3.82625C16.1682 3.79862 16.303 3.81278 16.4239 3.86669C16.5447 3.92061 16.6454 4.01149 16.7113 4.12625L18.4438 7.125C18.5099 7.2397 18.5379 7.37244 18.5238 7.50409C18.5096 7.63574 18.454 7.75949 18.365 7.8575L16.8588 9.52C16.8807 9.83879 16.8807 10.1587 16.8588 10.4775L18.365 12.1425C18.454 12.2405 18.5096 12.3643 18.5238 12.4959C18.5379 12.6276 18.5099 12.7603 18.4438 12.875L16.7113 15.875C16.6452 15.9895 16.5445 16.0802 16.4236 16.1338C16.3028 16.1875 16.168 16.2015 16.0388 16.1737L13.8438 15.7012C13.5813 15.8787 13.3038 16.0387 13.0163 16.18L12.3275 18.3162C12.287 18.4422 12.2076 18.5521 12.1007 18.63C11.9937 18.708 11.8648 18.75 11.7325 18.75H8.26751C8.13519 18.75 8.00628 18.708 7.89936 18.63C7.79243 18.5521 7.713 18.4422 7.67251 18.3162L6.98626 16.1812C6.6983 16.0404 6.42054 15.8796 6.15501 15.7L3.96126 16.1737C3.83184 16.2014 3.697 16.1872 3.57614 16.1333C3.45528 16.0794 3.35466 15.9885 3.28876 15.8737L1.55626 12.875C1.49011 12.7603 1.46208 12.6276 1.47624 12.4959C1.49039 12.3643 1.54599 12.2405 1.63501 12.1425L3.14126 10.4775C3.11944 10.1595 3.11944 9.84046 3.14126 9.5225L1.63501 7.8575C1.54599 7.75949 1.49039 7.63574 1.47624 7.50409C1.46208 7.37244 1.49011 7.2397 1.55626 7.125L3.28876 4.125C3.35484 4.01047 3.45554 3.91984 3.57639 3.86616C3.69723 3.81248 3.83198 3.79851 3.96126 3.82625L6.15501 4.3C6.42001 4.12125 6.69751 3.96 6.98626 3.81875L7.67376 1.68375C7.71412 1.55818 7.79317 1.4486 7.8996 1.37069C8.00602 1.29278 8.13437 1.25053 8.26626 1.25H11.7313H11.7325ZM11.275 2.5H8.72501L8.01501 4.70875L7.53626 4.9425C7.30091 5.05767 7.07371 5.18881 6.85626 5.335L6.41376 5.635L4.14376 5.145L2.86876 7.355L4.42501 9.0775L4.38751 9.6075C4.36954 9.86886 4.36954 10.1311 4.38751 10.3925L4.42501 10.9225L2.86626 12.645L4.14251 14.855L6.41251 14.3663L6.85501 14.665C7.07246 14.8112 7.29966 14.9423 7.53501 15.0575L8.01376 15.2912L8.72501 17.5H11.2775L11.99 15.29L12.4675 15.0575C12.7026 14.9426 12.9294 14.8115 13.1463 14.665L13.5875 14.3663L15.8588 14.855L17.1338 12.645L15.5763 10.9225L15.6138 10.3925C15.6318 10.1307 15.6318 9.86802 15.6138 9.60625L15.5763 9.07625L17.135 7.355L15.8588 5.145L13.5875 5.6325L13.1463 5.335C12.9294 5.18854 12.7026 5.05739 12.4675 4.9425L11.99 4.71L11.2763 2.5H11.275ZM10 6.25C10.9946 6.25 11.9484 6.64509 12.6517 7.34835C13.3549 8.05161 13.75 9.00544 13.75 10C13.75 10.9946 13.3549 11.9484 12.6517 12.6517C11.9484 13.3549 10.9946 13.75 10 13.75C9.00545 13.75 8.05162 13.3549 7.34836 12.6517C6.6451 11.9484 6.25001 10.9946 6.25001 10C6.25001 9.00544 6.6451 8.05161 7.34836 7.34835C8.05162 6.64509 9.00545 6.25 10 6.25ZM10 7.5C9.33697 7.5 8.70109 7.76339 8.23225 8.23223C7.7634 8.70107 7.50001 9.33696 7.50001 10C7.50001 10.663 7.7634 11.2989 8.23225 11.7678C8.70109 12.2366 9.33697 12.5 10 12.5C10.6631 12.5 11.2989 12.2366 11.7678 11.7678C12.2366 11.2989 12.5 10.663 12.5 10C12.5 9.33696 12.2366 8.70107 11.7678 8.23223C11.2989 7.76339 10.6631 7.5 10 7.5Z"
-                    fill="#A5BFCF"
-                  />
-                </svg>
-              </span>
-              個人設定
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" @click="logout">
-              <span class="me-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-box-arrow-right"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
-                  />
-                </svg>
-              </span>
-              登出
-            </a>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <!-- 桌機版選單 -->
+        <ul class="navbar-nav ms-auto">
+          <!-- 登入後 -->
+          <template v-if="authStore.isLoggedIn">
+            <!-- 新增文章 -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <img src="@/assets/images/plus.png" alt="plus" width="24" height="24" />
+              </a>
+            </li>
+            <!-- 通知 -->
+            <li class="nav-item dropdown">
+              <a
+                href="#"
+                class="nav-link position-relative dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                <span class="translate-middle badge position-absolute rounded-pill bg-danger">
+                  10
+                </span>
+                <img src="@/assets/images/notify.png" alt="notify" width="24" height="24" />
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end notify border-light-subtle">
+                <li>
+                  <div class="d-flex p-2">
+                    <h6 class="fw-bold text-light me-auto mb-0">通知</h6>
+                    <small class="text-light">全部已讀</small>
+                  </div>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a href="#" class="dropdown-item d-flex align-items-center">
+                    <img
+                      src="@/assets/images/ellipse.png"
+                      class="me-2"
+                      alt="ellipse"
+                      width="8"
+                      height="8"
+                    />
+                    <!-- 圖示 -->
+                    <div
+                      class="rounded-circle opacity-50 bg-dark notify-icon d-flex align-items-center me-3"
+                    >
+                      <img
+                        src="@/assets/images/chat.png"
+                        class="mx-auto"
+                        alt="chat"
+                        width="24"
+                        height="24"
+                      />
+                    </div>
+                    <!-- 內容 -->
+                    <p class="mb-1">
+                      <small class="text-light">#情報 免費領取! 現金一千萬等你來拿!</small>
+                    </p>
+                    <!-- 時間 -->
+                    <div class="fs-7 text-body-tertiary align-self-start ms-auto">13:00</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- 訊息 -->
+            <li class="nav-item dropdown">
+              <a
+                href="#"
+                class="nav-link position-relative dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                <span class="translate-middle badge position-absolute rounded-pill bg-danger">
+                  10
+                </span>
+                <img src="@/assets/images/msg.png" alt="msg" width="24" height="24" />
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end message border-light-subtle">
+                <li>
+                  <div class="d-flex p-2">
+                    <h6 class="fw-bold text-light me-auto mb-0">訊息</h6>
+                    <small class="text-light">全部已讀</small>
+                  </div>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a href="#" class="dropdown-item d-flex align-items-center">
+                    <img
+                      src="@/assets/images/ellipse.png"
+                      class="me-2"
+                      alt="ellipse"
+                      width="8"
+                      height="8"
+                    />
+                    <!-- 圖示 -->
+                    <img
+                      src="@/assets/images/avatar06.png"
+                      class="rounded-circle object-fit-cover"
+                      alt="chat"
+                      width="42"
+                      height="42"
+                    />
+                    <div class="ms-2">
+                      <div class="d-flex">
+                        <!-- 留言者 -->
+                        <small class="text-light fw-bold">小美</small>
+                        <!-- 時間 -->
+                        <div class="fs-7 text-body-tertiary ms-auto">13:00</div>
+                      </div>
+                      <!-- 內容 -->
+                      <p class="text-light mb-0">
+                        <small>阿呆，你最近都不理我，你484在外面有別的女人!!!</small>
+                      </p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- 個人資料 -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img
+                  src="@/assets/images/avatar06.png"
+                  alt="avator"
+                  class="rounded-circle"
+                  width="24"
+                  height="24"
+                />
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end settings border-light-subtle">
+                <li>
+                  <router-link class="dropdown-item" to="/user/profile">
+                    <img
+                      src="@/assets/images/wall.png"
+                      class="me-2"
+                      alt="我的個人牆"
+                      width="16"
+                      height="16"
+                    />
+                    <span class="align-middle">我的個人牆</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link class="dropdown-item" to="/user/message">
+                    <img
+                      src="@/assets/images/comment.png"
+                      class="me-2"
+                      alt="我的訊息"
+                      width="16"
+                      height="16"
+                    />
+                    <span class="align-middle">我的訊息</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link class="dropdown-item" to="/user/follow">
+                    <img
+                      src="@/assets/images/followed.png"
+                      class="me-2"
+                      alt="我的追蹤"
+                      width="16"
+                      height="16"
+                    />
+                    <span class="align-middle">我的追蹤</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link class="dropdown-item" to="/user/favorite">
+                    <img
+                      src="@/assets/images/bookmark-outline.png"
+                      class="me-2"
+                      alt="我的收藏"
+                      width="16"
+                      height="16"
+                    />
+                    <span class="align-middle">我的收藏</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link class="dropdown-item" to="/user/settings">
+                    <img
+                      src="@/assets/images/setting.png"
+                      class="me-2"
+                      alt="個人設定"
+                      width="16"
+                      height="16"
+                    />
+                    <span class="align-middle">個人設定</span>
+                  </router-link>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a href="#" class="dropdown-item" @click="logout">
+                    <img
+                      src="@/assets/images/logout.png"
+                      class="me-2"
+                      alt="登出"
+                      width="16"
+                      height="16"
+                    />
+                    <span class="align-middle">登出</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </template>
+          <!-- 未登入 -->
+          <li class="nav-item" v-else>
+            <router-link to="/login" class="btn btn-secondary">登入</router-link>
           </li>
         </ul>
       </div>
-      <!-- 桌機版選單 -->
-      <ul class="navbar-nav d-none d-lg-flex">
-        <!-- 登入後 -->
-        <template v-if="isLoggedIn">
-          <!-- 新增文章 -->
-          <li class="nav-item">
-            <button class="btn badge-btn me-0 me-lg-2 d-none d-lg-block">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                class="bi bi-plus-lg"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                />
-              </svg>
-            </button>
-          </li>
-          <!-- 通知 -->
-          <li class="nav-item">
-            <button class="btn badge-btn position-relative me-2">
-              <span
-                class="position-absolute translate-middle badge start-90 rounded-pill bg-danger"
-              >
-                10
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                class="bi bi-bell"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"
-                />
-              </svg>
-            </button>
-          </li>
-          <!-- 訊息 -->
-          <li class="nav-item">
-            <button class="btn badge-btn position-relative me-2">
-              <span
-                class="position-absolute translate-middle badge start-90 rounded-pill bg-danger"
-              >
-                10
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                class="bi bi-envelope"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
-                />
-              </svg>
-            </button>
-          </li>
-          <!-- 個人資料 -->
-          <li class="nav-item dropdown">
-            <button class="btn badge-btn dropdown-toggle" data-bs-toggle="dropdown">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                class="bi bi-person-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-              </svg>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <router-link class="dropdown-item" to="/user/profile">我的個人牆</router-link>
-              </li>
-              <li>
-                <router-link class="dropdown-item" to="/user/forum">我的追蹤</router-link>
-              </li>
-              <li>
-                <router-link class="dropdown-item" to="/user/article">我的收藏</router-link>
-              </li>
-              <li>
-                <router-link class="dropdown-item" to="/user/settings">個人設定</router-link>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a href="#" class="dropdown-item" @click="logout">登出</a>
-              </li>
-            </ul>
-          </li>
-        </template>
-        <!-- 未登入 -->
-        <li class="nav-item" v-else>
-          <router-link to="/login" class="btn btn-secondary">登入</router-link>
-        </li>
-      </ul>
     </div>
   </nav>
 </template>
 
 <style lang="scss" scoped>
-.badge {
+.nav-link .badge {
   top: 12px;
+  right: -12px;
 }
-.btn.show {
-  border-color: #040811;
+.notify-icon {
+  width: 42px;
+  height: 42px;
 }
-.badge-btn {
-  &:active {
-    border-color: #040811;
-  }
-}
+// .dropdown-menu::before,
+// .dropdown-menu::after {
+//   border: solid transparent;
+//   content: '';
+//   width: 0;
+//   height: 0;
+//   position: absolute;
+//   // border-width: 0 10px 10px 10px;
+//   // border-bottom-color: #1d2938;
+// }
+// .dropdown-menu::before {
+//   border-width: 0 10px 10px 10px;
+//   border-bottom-color: #4c5a67;
+// }
+// .dropdown-menu::after {
+//   border-width: 0 12px 12px 12px;
+//   border-bottom-color: #1d2938;
+// }
+// .notify::before,
+// .message::before {
+//   top: -10px;
+//   left: 60px;
+// }
+// .notify::after,
+// .message::after {
+//   top: -9px;
+//   left: 58px;
+// }
+// .settings::before {
+//   top: -10px;
+//   left: 35px;
+// }
+// .settings::after {
+//   top: -9px;
+//   left: 33px;
+// }
 </style>

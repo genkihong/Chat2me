@@ -1,7 +1,5 @@
-<template>
-  <div>Message</div>
-</template>
-
 <script setup></script>
+
+<template></template>
 
 <style lang="scss" scoped></style>

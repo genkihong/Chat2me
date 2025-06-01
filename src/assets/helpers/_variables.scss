@@ -11,13 +11,13 @@ $gray-100: #f8f9fa !default;
 $gray-200: #e6f9ff !default; //#e9ecef !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
+$gray-500: #a5bfcf !default; //#adb5bd !default;
 $gray-600: #6c757d !default;
 $gray-700: #4c5a67 !default; //#495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #1d2938 !default; //#212529 !default;
-$gray-905: #122032 !default;
-$gray-910: #040811 !default;
+$gray-910: #122032 !default;
+$gray-920: #040811 !default;
 $black: #000 !default;
 // scss-docs-end gray-color-variables
 
@@ -304,13 +304,13 @@ $cyans: (
 
 // scss-docs-start theme-color-variables
 $primary: $blue !default;
-$secondary: $gray-600 !default;
+$secondary: $gray-500 !default; //$gray-600 !default;
 $success: $green !default;
 $info: $cyan !default;
 $warning: $yellow !default;
 $danger: $red !default;
-$light: $gray-100 !default;
-$dark: $gray-910 !default; //$gray-900 !default;
+$light: $gray-200; //$gray-100 !default;
+$dark: $gray-920 !default; //$gray-900 !default;
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
@@ -320,7 +320,6 @@ $theme-colors: (
   // 'primary03': #007acc,
   'primary': $primary,
   'secondary': $secondary,
-  'secondary01': #a5bfcf,
   'success': $success,
   'info': $info,
   'warning': $warning,
@@ -1284,7 +1283,7 @@ $navbar-dark-brand-hover-color: $navbar-dark-active-color !default;
 // Dropdown menu container and contents.
 
 // scss-docs-start dropdown-variables
-$dropdown-min-width: 10rem !default;
+$dropdown-min-width: 9rem; //10rem !default;
 $dropdown-padding-x: 0 !default;
 $dropdown-padding-y: 0.5rem !default;
 $dropdown-spacer: 0.125rem !default;
@@ -1306,7 +1305,7 @@ $dropdown-link-hover-color: $dropdown-link-color !default;
 $dropdown-link-hover-bg: var(--#{$prefix}tertiary-bg) !default;
 
 $dropdown-link-active-color: $component-active-color !default;
-$dropdown-link-active-bg: $gray-905; //$component-active-bg !default;
+$dropdown-link-active-bg: $gray-910; //$component-active-bg !default;
 
 $dropdown-link-disabled-color: var(--#{$prefix}tertiary-color) !default;
 
@@ -1421,7 +1420,7 @@ $card-group-margin: $grid-gutter-width * 0.5 !default;
 $accordion-padding-y: 1rem !default;
 $accordion-padding-x: 1.25rem !default;
 $accordion-color: var(--#{$prefix}body-color) !default;
-$accordion-bg: var(--#{$prefix}body-bg) !default;
+$accordion-bg: $gray-920; //var(--#{$prefix}body-bg) !default;
 $accordion-border-width: var(--#{$prefix}border-width) !default;
 $accordion-border-color: var(--#{$prefix}border-color) !default;
 $accordion-border-radius: var(--#{$prefix}border-radius) !default;
@@ -1638,9 +1637,9 @@ $progress-bar-transition: width 0.6s ease !default;
 // List group
 
 // scss-docs-start list-group-variables
-$list-group-color: $gray-200; //var(--#{$prefix}body-color) !default;
-$list-group-bg: $gray-910; //var(--#{$prefix}body-bg) !default;
-$list-group-border-color: $gray-910; //var(--#{$prefix}border-color) !default;
+$list-group-color: $gray-500; //var(--#{$prefix}body-color) !default;
+$list-group-bg: $gray-920; //var(--#{$prefix}body-bg) !default;
+$list-group-border-color: $gray-920; //var(--#{$prefix}border-color) !default;
 $list-group-border-width: var(--#{$prefix}border-width) !default;
 $list-group-border-radius: var(--#{$prefix}border-radius) !default;
 
@@ -1651,19 +1650,19 @@ $list-group-item-bg-scale: -80% !default; // Deprecated in v5.3.0
 $list-group-item-color-scale: 40% !default; // Deprecated in v5.3.0
 // fusv-enable
 
-$list-group-hover-bg: $gray-905; //var(--#{$prefix}tertiary-bg) !default;
-$list-group-active-color: $gray-200; //$component-active-color !default;
-$list-group-active-bg: $gray-905; //$component-active-bg !default;
-$list-group-active-border-color: $gray-910; //$list-group-active-bg !default;
+$list-group-hover-bg: $gray-910; //var(--#{$prefix}tertiary-bg) !default;
+$list-group-active-color: $gray-500; //$component-active-color !default;
+$list-group-active-bg: $gray-910; //$component-active-bg !default;
+$list-group-active-border-color: $gray-920; //$list-group-active-bg !default;
 
 $list-group-disabled-color: var(--#{$prefix}secondary-color) !default;
 $list-group-disabled-bg: $list-group-bg !default;
 
-$list-group-action-color: $gray-200; //var(--#{$prefix}secondary-color) !default;
-$list-group-action-hover-color: $gray-200; //var(--#{$prefix}emphasis-color) !default;
+$list-group-action-color: $gray-500; //var(--#{$prefix}secondary-color) !default;
+$list-group-action-hover-color: $gray-500; //var(--#{$prefix}emphasis-color) !default;
 
-$list-group-action-active-color: $gray-200; //var(--#{$prefix}body-color) !default;
-$list-group-action-active-bg: $gray-905; //var(--#{$prefix}secondary-bg) !default;
+$list-group-action-active-color: $gray-500; //var(--#{$prefix}body-color) !default;
+$list-group-action-active-bg: $gray-910; //var(--#{$prefix}secondary-bg) !default;
 // scss-docs-end list-group-variables
 
 // Image thumbnails

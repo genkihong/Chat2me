@@ -63,56 +63,50 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="col-lg-6 offset-lg-1 pb-3">
-    <h3 class="mb-5">個人設定</h3>
-    <div class="text-center mb-5">
-      <img :src="previewUrl" alt="avator" class="rounded-circle avator-img" v-if="previewUrl" />
-      <img :src="user.imageUrl" alt="avator" class="rounded-circle avator-img" v-else />
-      <!-- 上傳圖片按鈕 -->
-      <button
-        class="position-relative btn-upload btn text-white rounded-circle opacity-50 p-2 bg-dark"
-        @click="triggerFileInput"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
-          fill="currentColor"
-          class="bi bi-camera"
-          viewBox="0 0 16 16"
+  <div class="card bg-dark">
+    <div class="card-body">
+      <h4 class="mb-5">個人設定</h4>
+      <div class="text-center mb-5">
+        <!-- 圖片預覽 -->
+        <img
+          :src="previewUrl"
+          class="rounded-circle object-fit-cover"
+          alt="avatar"
+          width="150"
+          height="150"
+          v-if="previewUrl"
+        />
+        <!-- 個人圖片 -->
+        <img
+          :src="user.imageUrl"
+          class="rounded-circle object-fit-cover"
+          alt="avatar"
+          width="150"
+          height="150"
+          v-else
+        />
+        <!-- 上傳圖片按鈕 -->
+        <button
+          class="position-relative btn upload-btn border-dark-active text-white rounded-circle opacity-50 p-2 bg-dark"
+          @click="triggerFileInput"
         >
-          <path
-            d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"
-          />
-          <path
-            d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
-          />
-        </svg>
-      </button>
-      <input
-        type="file"
-        class="d-none"
-        @change="handleFileChange"
-        accept="image/*"
-        ref="fileInput"
-      />
-    </div>
-    <form @submit.prevent="handleSubmit">
-      <div class="row mb-3">
-        <label for="userId" class="col-sm-2 col-form-label">編號</label>
-        <div class="col-sm-10">
+          <img src="@/assets/images/camera.png" alt="camera" width="24" height="24" />
+        </button>
+        <input
+          type="file"
+          class="d-none"
+          @change="handleFileChange"
+          accept="image/*"
+          ref="fileInput"
+        />
+      </div>
+      <form class="row" @submit.prevent="handleSubmit">
+        <!-- <div class="col-md-6 mb-3">
+          <label for="userId" class="form-label">編號</label>
           <input type="text" class="form-control bg-dark" id="userId" v-model="user.id" readonly />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="name" class="col-sm-2 col-form-label">名稱</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="name" v-model="user.name" />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="email" class="col-sm-2 col-form-label">電子信箱</label>
-        <div class="col-sm-10">
+        </div> -->
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">電子信箱</label>
           <input
             type="text"
             class="form-control bg-dark"
@@ -121,10 +115,12 @@ onMounted(() => {
             readonly
           />
         </div>
-      </div>
-      <div class="row mb-3">
-        <label for="descrption" class="col-sm-2 col-form-label">自我介紹</label>
-        <div class="col-sm-10">
+        <div class="col-md-6 mb-3">
+          <label for="name" class="form-label">名稱</label>
+          <input type="text" class="form-control" id="name" v-model="user.name" />
+        </div>
+        <div class="mb-3">
+          <label for="descrption" class="form-label">自我介紹</label>
           <textarea
             type="text"
             class="form-control"
@@ -133,31 +129,19 @@ onMounted(() => {
             v-model="user.description"
           />
         </div>
-      </div>
-      <div class="text-end">
-        <button type="submit" class="btn btn-custom rounded-1 px-3">儲存</button>
-      </div>
-    </form>
+        <div class="text-end">
+          <button type="submit" class="btn btn-custom rounded-1 px-3">儲存</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.avator-img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  object-position: center;
-  margin-left: 100px;
-}
-
-.btn-upload {
+.upload-btn {
   top: 60px;
   right: 30px;
-  &:active {
-    border-color: #040811;
-  }
 }
-
 textarea {
   resize: none;
 }

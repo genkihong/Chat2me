@@ -885,6 +885,14 @@ $utilities: map-merge(
         right: right,
         center: center,
       ),
+    ),
+    'button-active': (
+      property: border-color,
+      class: border,
+      state: active,
+      values: (
+        dark: $gray-920,
+      ),
     )
   ),
   $utilities

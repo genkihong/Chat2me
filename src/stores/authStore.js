@@ -1,10 +1,11 @@
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { apiSignup, apiLogin, apiForgetPassword, apiResetPassword } from '@/api/auth'
 import { toast } from 'vue3-toastify'
 
 export const useAuthStore = defineStore('auth', () => {
+  const route = useRoute()
   const router = useRouter()
   const token = ref(localStorage.getItem('token') ?? null)
   const user = reactive({
@@ -13,6 +14,9 @@ export const useAuthStore = defineStore('auth', () => {
     // email: JSON.parse(localStorage.getItem('user'))?.email || null,
   })
 
+  const isLoggedIn = computed(() => {
+    return !!token.value
+  })
   //註冊
   const signup = async (data) => {
     try {
@@ -22,7 +26,7 @@ export const useAuthStore = defineStore('auth', () => {
       })
       setTimeout(() => {
         router.push('/login')
-      }, 1500)
+      }, 1000)
     } catch (error) {
       toast.error(error.response.data.message, {
         theme: 'colored',
@@ -48,10 +52,8 @@ export const useAuthStore = defineStore('auth', () => {
       toast.success(res.data.message, {
         theme: 'colored',
       })
-
-      setTimeout(() => {
-        router.push('/')
-      }, 1000)
+      const redirectPath = route.query.redirect || '/'
+      router.push(redirectPath)
     } catch (error) {
       toast.error(error.response.data.message, {
         theme: 'colored',
@@ -65,7 +67,6 @@ export const useAuthStore = defineStore('auth', () => {
     user.name = null
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    router.push('/login')
   }
   //忘記密碼
   const forgetPassword = async (email) => {
@@ -92,6 +93,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     user,
     token,
+    isLoggedIn,
     signup,
     login,
     logout,
