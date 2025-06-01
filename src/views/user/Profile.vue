@@ -128,7 +128,7 @@ const uploadImage = async () => {
   margin-top: -100px;
 }
 .profile-bg {
-  background-image: url('/images/user-bg.png');
+  background-image: url('@/assets/images/user-bg.png');
   height: 240px;
 }
 .upload-btn {

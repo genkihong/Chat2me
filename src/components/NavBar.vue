@@ -196,7 +196,7 @@ const logout = () => {
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img
                   src="@/assets/images/avatar06.png"
-                  alt="avator"
+                  alt="avatar"
                   class="rounded-circle"
                   width="24"
                   height="24"
@@ -208,7 +208,7 @@ const logout = () => {
                     <img
                       src="@/assets/images/wall.png"
                       class="me-2"
-                      alt="我的個人牆"
+                      alt="profile"
                       width="16"
                       height="16"
                     />
@@ -220,7 +220,7 @@ const logout = () => {
                     <img
                       src="@/assets/images/comment.png"
                       class="me-2"
-                      alt="我的訊息"
+                      alt="message"
                       width="16"
                       height="16"
                     />
@@ -232,7 +232,7 @@ const logout = () => {
                     <img
                       src="@/assets/images/followed.png"
                       class="me-2"
-                      alt="我的追蹤"
+                      alt="follow"
                       width="16"
                       height="16"
                     />
@@ -244,7 +244,7 @@ const logout = () => {
                     <img
                       src="@/assets/images/bookmark-outline.png"
                       class="me-2"
-                      alt="我的收藏"
+                      alt="favorite"
                       width="16"
                       height="16"
                     />
@@ -256,7 +256,7 @@ const logout = () => {
                     <img
                       src="@/assets/images/setting.png"
                       class="me-2"
-                      alt="個人設定"
+                      alt="settings"
                       width="16"
                       height="16"
                     />
@@ -269,7 +269,7 @@ const logout = () => {
                     <img
                       src="@/assets/images/logout.png"
                       class="me-2"
-                      alt="登出"
+                      alt="logout"
                       width="16"
                       height="16"
                     />

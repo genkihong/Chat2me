@@ -22,6 +22,7 @@ npm run build
 
 - Vite
 - Vue3 Composition API
+- VueRouter
 - Pinia
 - axios
 - Bootstrap5
