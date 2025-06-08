@@ -7,331 +7,299 @@ const authStore = useAuthStore()
 
 const logout = () => {
   authStore.logout()
-  router.push('/')
+  // router.push('/')
 }
 </script>
 
 <template>
-  <!-- navbar -->
-  <nav class="navbar navbar-expand-lg bg-dark">
-    <div class="container">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarContent"
-        aria-controls="navbarContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <img src="@/assets/images/burger.png" alt="burger" width="24" height="24" />
-      </button>
-      <!-- Logo -->
-      <router-link to="/" class="navbar-brand me-0">
-        <svg
-          width="136"
-          height="32"
-          viewBox="0 0 136 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+  <header class="position-sticky top-0 z-2">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-dark">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-          <path
-            d="M126.785 11.9132C128.318 11.9132 129.552 12.3332 130.485 13.1732C131.432 14.0132 131.905 15.2132 131.905 16.7732C131.905 17.0398 131.898 17.2398 131.885 17.3732L123.585 18.8932C123.865 19.9598 124.765 20.4932 126.285 20.4932C126.845 20.4932 127.372 20.4132 127.865 20.2532C128.358 20.0798 128.785 19.8265 129.145 19.4932L130.445 21.5532C129.845 22.0332 129.158 22.3932 128.385 22.6332C127.612 22.8732 126.798 22.9932 125.945 22.9932C124.838 22.9932 123.865 22.7998 123.025 22.4132C122.198 22.0132 121.558 21.4465 121.105 20.7132C120.665 19.9798 120.445 19.1332 120.445 18.1732C120.445 16.9865 120.712 15.9198 121.245 14.9732C121.778 14.0132 122.525 13.2665 123.485 12.7332C124.458 12.1865 125.558 11.9132 126.785 11.9132ZM126.645 14.2532C125.805 14.2532 125.118 14.5065 124.585 15.0132C124.065 15.5198 123.725 16.1998 123.565 17.0532L129.005 16.0532C128.925 15.4798 128.672 15.0398 128.245 14.7332C127.832 14.4132 127.298 14.2532 126.645 14.2532Z"
-            fill="#009BFF"
-          />
-          <path
-            d="M114.771 11.9132C115.945 11.9132 116.878 12.2332 117.571 12.8732C118.265 13.4998 118.611 14.3932 118.611 15.5532C118.611 15.9798 118.565 16.4198 118.471 16.8732L117.291 22.8332H114.171L115.311 17.0932C115.365 16.8265 115.391 16.5532 115.391 16.2732C115.391 15.7265 115.245 15.3132 114.951 15.0332C114.671 14.7532 114.251 14.6132 113.691 14.6132C112.185 14.6132 111.245 15.5132 110.871 17.3132L109.771 22.8332H106.651L107.791 17.0932C107.845 16.8265 107.871 16.5598 107.871 16.2932C107.871 15.7465 107.725 15.3332 107.431 15.0532C107.151 14.7598 106.731 14.6132 106.171 14.6132C104.665 14.6132 103.718 15.5265 103.331 17.3532L102.251 22.8332H99.1314L101.271 12.0732H104.231L103.991 13.1932C104.925 12.3398 106.051 11.9132 107.371 11.9132C108.118 11.9132 108.778 12.0665 109.351 12.3732C109.938 12.6665 110.378 13.0998 110.671 13.6732C111.191 13.0998 111.798 12.6665 112.491 12.3732C113.185 12.0665 113.945 11.9132 114.771 11.9132Z"
-            fill="#009BFF"
-          />
-          <path
-            d="M91.7745 20.1932H97.6545L97.1345 22.8332H86.5345L86.9545 20.7332L93.3345 15.7332C94.1078 15.1065 94.6412 14.5798 94.9345 14.1532C95.2411 13.7265 95.3945 13.2798 95.3945 12.8132C95.3945 12.3465 95.2145 11.9732 94.8545 11.6932C94.5078 11.4132 94.0012 11.2732 93.3345 11.2732C92.7745 11.2732 92.2345 11.3998 91.7145 11.6532C91.1945 11.9065 90.7411 12.2665 90.3545 12.7332L88.1745 11.1532C88.7478 10.3665 89.5345 9.7465 90.5345 9.29316C91.5345 8.8265 92.6278 8.59316 93.8145 8.59316C94.7878 8.59316 95.6412 8.75317 96.3745 9.07316C97.1212 9.39316 97.6945 9.83983 98.0945 10.4132C98.5078 10.9865 98.7145 11.6332 98.7145 12.3532C98.7145 13.2198 98.4745 14.0332 97.9945 14.7932C97.5145 15.5532 96.6812 16.3932 95.4945 17.3132L91.7745 20.1932Z"
-            fill="#009BFF"
-          />
-          <path
-            d="M82.9704 19.0332C82.9438 19.1398 82.9304 19.2865 82.9304 19.4732C82.9304 20.1665 83.3038 20.5132 84.0504 20.5132C84.4771 20.5132 84.9038 20.3865 85.3304 20.1332L85.7904 22.3532C85.0971 22.7798 84.1971 22.9932 83.0904 22.9932C82.0771 22.9932 81.2638 22.7265 80.6504 22.1932C80.0504 21.6598 79.7504 20.9265 79.7504 19.9932C79.7504 19.7265 79.7838 19.4132 79.8504 19.0532L81.7104 9.69316H84.8304L84.3104 12.3132H86.9704L86.4904 14.7132H83.8304L82.9704 19.0332Z"
-            fill="#009BFF"
-          />
-          <path
-            d="M77.0467 20.5132C77.4067 20.5132 77.7067 20.4598 77.9467 20.3532L77.6267 22.7332C77.0933 22.9065 76.5267 22.9932 75.9267 22.9932C75.1533 22.9932 74.5133 22.8398 74.0067 22.5332C73.5133 22.2265 73.1733 21.7998 72.9867 21.2532C72.04 22.4132 70.7733 22.9932 69.1867 22.9932C68.3467 22.9932 67.5733 22.7998 66.8667 22.4132C66.16 22.0265 65.5933 21.4732 65.1667 20.7532C64.7533 20.0198 64.5467 19.1598 64.5467 18.1732C64.5467 16.9865 64.8067 15.9198 65.3267 14.9732C65.86 14.0132 66.58 13.2665 67.4867 12.7332C68.3933 12.1865 69.3933 11.9132 70.4867 11.9132C72.14 11.9132 73.3067 12.4532 73.9867 13.5332L74.2667 12.0732H77.3867L75.9867 19.0532C75.96 19.1598 75.9467 19.3065 75.9467 19.4932C75.9467 19.8398 76.04 20.0998 76.2267 20.2732C76.4267 20.4332 76.7 20.5132 77.0467 20.5132ZM70.1467 20.4132C70.76 20.4132 71.3067 20.2665 71.7867 19.9732C72.2667 19.6665 72.64 19.2465 72.9067 18.7132C73.1733 18.1798 73.3067 17.5665 73.3067 16.8732C73.3067 16.1398 73.0867 15.5598 72.6467 15.1332C72.22 14.7065 71.62 14.4932 70.8467 14.4932C70.2333 14.4932 69.6867 14.6465 69.2067 14.9532C68.7267 15.2465 68.3533 15.6598 68.0867 16.1932C67.82 16.7265 67.6867 17.3398 67.6867 18.0332C67.6867 18.7665 67.9 19.3465 68.3267 19.7732C68.7667 20.1998 69.3733 20.4132 70.1467 20.4132Z"
-            fill="#009BFF"
-          />
-          <path
-            d="M58.7814 11.9132C59.9814 11.9132 60.9347 12.2332 61.6414 12.8732C62.348 13.5132 62.7014 14.4198 62.7014 15.5932C62.7014 16.0198 62.6547 16.4465 62.5614 16.8732L61.3614 22.8332H58.2414L59.4014 17.0732C59.4547 16.8465 59.4814 16.5998 59.4814 16.3332C59.4814 15.7732 59.328 15.3465 59.0214 15.0532C58.7147 14.7598 58.2547 14.6132 57.6414 14.6132C56.8414 14.6132 56.1747 14.8465 55.6414 15.3132C55.1214 15.7665 54.768 16.4532 54.5814 17.3732L53.5014 22.8332H50.3814L53.3414 7.99316H56.4614L55.4614 13.0532C56.3814 12.2932 57.488 11.9132 58.7814 11.9132Z"
-            fill="#009BFF"
-          />
-          <path
-            d="M43.2734 23.0732C41.8734 23.0732 40.6467 22.8198 39.5934 22.3132C38.5534 21.8065 37.7534 21.0932 37.1934 20.1732C36.6334 19.2532 36.3534 18.1932 36.3534 16.9932C36.3534 15.4065 36.7134 13.9798 37.4334 12.7132C38.1667 11.4332 39.1934 10.4265 40.5134 9.69316C41.8334 8.95983 43.3467 8.59316 45.0534 8.59316C46.3067 8.59316 47.4134 8.8065 48.3734 9.23316C49.3334 9.65983 50.0601 10.2732 50.5534 11.0732L48.2134 12.9932C47.4667 11.8998 46.3401 11.3532 44.8334 11.3532C43.8067 11.3532 42.9001 11.5932 42.1134 12.0732C41.3267 12.5532 40.7134 13.2065 40.2734 14.0332C39.8467 14.8598 39.6334 15.7798 39.6334 16.7932C39.6334 17.8732 39.9734 18.7332 40.6534 19.3732C41.3467 19.9998 42.3134 20.3132 43.5534 20.3132C45.0334 20.3132 46.2734 19.7732 47.2734 18.6932L49.1934 20.6532C47.8067 22.2665 45.8334 23.0732 43.2734 23.0732Z"
-            fill="#009BFF"
-          />
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M6.23705 6.96086C6.72968 4.12682 9.30917 3 11.3028 3H27.264C27.9963 3 28.6676 3.17886 29.2304 3.55674C29.7869 3.93036 30.1252 4.42321 30.3265 4.87301C30.6786 5.66009 30.6685 6.46915 30.6661 6.66706C30.6659 6.67962 30.6658 6.68973 30.6658 6.69721C30.6658 6.88955 30.6199 7.28591 30.578 7.64201C30.528 8.06646 30.4572 8.63526 30.3729 9.29549C30.2042 10.6171 29.9795 12.321 29.7552 14.0037C29.5308 15.6869 29.3064 17.3512 29.1382 18.5945C29.054 19.2162 28.9839 19.7328 28.9349 20.094L28.8578 20.6605C28.8578 20.6605 28.8577 20.6611 27.264 20.4498L28.8578 20.6605L28.8479 20.7332L28.8314 20.8041C28.4287 22.5371 27.5512 23.6941 26.4592 24.3825C25.413 25.042 24.3251 25.1742 23.6186 25.1742H17.2983C16.8716 25.5487 16.3139 26.0225 15.7617 26.4917C15.6707 26.5689 15.58 26.6461 15.49 26.7226C14.5562 27.5165 13.7084 28.2432 13.3566 28.5901C12.9785 28.9629 12.5438 29.3099 12.0467 29.5041C11.4936 29.7202 10.7521 29.7746 10.0862 29.3273C9.52055 28.9473 9.30371 28.3922 9.2164 28.0808C9.11966 27.7357 9.09951 27.398 9.10787 27.1339L9.10908 27.0959L9.26373 25.1742H7.82193C6.40276 25.1742 4.96415 24.7934 4.31105 23.3847C4.04169 22.8037 3.99327 22.2007 4.0007 21.711C4.00821 21.2155 4.07789 20.6936 4.14763 20.2213C4.72737 16.2953 5.95622 8.57641 6.23705 6.96086ZM25.6809 20.1616L25.7474 19.6727C25.7964 19.312 25.8664 18.796 25.9504 18.175C26.1185 16.9328 26.3426 15.2707 26.5666 13.5902C26.7907 11.9092 27.0145 10.2121 27.1821 8.8993C27.266 8.2423 27.3353 7.68547 27.3834 7.27637C27.4132 7.02365 27.43 6.86405 27.4393 6.77622C27.4475 6.69811 27.4498 6.67677 27.4498 6.69721C27.4498 6.68483 27.4498 6.67275 27.4498 6.66091C27.45 6.57024 27.4502 6.49306 27.4393 6.39365C27.4288 6.29878 27.4117 6.22734 27.3948 6.18003C27.3657 6.17556 27.3232 6.17161 27.264 6.17161H11.3028C10.2815 6.17161 9.54564 6.69806 9.40681 7.49675C9.13215 9.07683 7.90758 16.7674 7.33006 20.6784C7.26077 21.1476 7.22042 21.4889 7.21634 21.7584C7.21508 21.8412 7.21768 21.9049 7.22152 21.9526C7.33059 21.9765 7.51961 22.0026 7.82193 22.0026H12.7451L12.4972 25.0826C12.7892 24.8315 13.0942 24.5719 13.3901 24.3204C13.4732 24.2498 13.5557 24.1796 13.6373 24.1103C14.4737 23.3995 15.2223 22.7633 15.5654 22.4407L16.0313 22.0026H23.6186C23.9537 22.0026 24.3703 21.9351 24.7272 21.7101C25.0315 21.5183 25.4441 21.1199 25.6809 20.1616ZM10.6115 11.5838C10.6115 10.7079 11.3315 9.99795 12.2195 9.99795H22.3456C23.2337 9.99795 23.9536 10.7079 23.9536 11.5838C23.9536 12.4596 23.2337 13.1696 22.3456 13.1696H12.2195C11.3315 13.1696 10.6115 12.4596 10.6115 11.5838ZM15.7035 16.4343C15.7035 15.5584 16.4235 14.8485 17.3115 14.8485H21.767C22.6551 14.8485 23.375 15.5584 23.375 16.4343C23.375 17.3101 22.6551 18.0201 21.767 18.0201H17.3115C16.4235 18.0201 15.7035 17.3101 15.7035 16.4343Z"
-            fill="#009BFF"
-          />
-        </svg>
-      </router-link>
-      <!-- 手機版選單 -->
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <!-- 桌機版選單 -->
-        <ul class="navbar-nav ms-auto">
-          <!-- 登入後 -->
-          <template v-if="authStore.isLoggedIn">
-            <!-- 新增文章 -->
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <img src="@/assets/images/plus.png" alt="plus" width="24" height="24" />
-              </a>
-            </li>
-            <!-- 通知 -->
-            <li class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link position-relative dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                <span class="translate-middle badge position-absolute rounded-pill bg-danger">
-                  10
-                </span>
-                <img src="@/assets/images/notify.png" alt="notify" width="24" height="24" />
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end notify border-light-subtle">
-                <li>
-                  <div class="d-flex p-2">
-                    <h6 class="fw-bold text-light me-auto mb-0">通知</h6>
-                    <small class="text-light">全部已讀</small>
-                  </div>
-                </li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a href="#" class="dropdown-item d-flex align-items-center">
-                    <img
-                      src="@/assets/images/ellipse.png"
-                      class="me-2"
-                      alt="ellipse"
-                      width="8"
-                      height="8"
-                    />
-                    <!-- 圖示 -->
-                    <div
-                      class="rounded-circle opacity-50 bg-dark notify-icon d-flex align-items-center me-3"
-                    >
-                      <img
-                        src="@/assets/images/chat.png"
-                        class="mx-auto"
-                        alt="chat"
-                        width="24"
-                        height="24"
-                      />
+          <img src="@/assets/images/burger.png" alt="burger" width="24" height="24" />
+        </button>
+        <!-- Logo -->
+        <router-link to="/" class="p-1 me-0">
+          <img src="@/assets/images/logo.svg" alt="chat2me" />
+        </router-link>
+        <!-- 手機版選單 -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <!-- 桌機版選單 -->
+          <ul class="navbar-nav ms-auto">
+            <!-- 登入後 -->
+            <template v-if="authStore.isLoggedIn">
+              <!-- 新增文章 -->
+              <li class="nav-item me-3">
+                <router-link to="/article/new" class="nav-link">
+                  <img src="@/assets/images/plus.png" alt="plus" width="24" height="24" />
+                </router-link>
+              </li>
+              <!-- 通知 -->
+              <li class="nav-item dropdown me-3">
+                <a href="" class="nav-link position-relative" data-bs-toggle="dropdown">
+                  <img src="@/assets/images/notify.png" alt="notify" width="24" height="24" />
+                  <span class="badge-num"> 10 </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end notify border-light-subtle">
+                  <li>
+                    <div class="d-flex p-2">
+                      <h6 class="fw-bold text-light me-auto mb-0">通知</h6>
+                      <small class="text-light">全部已讀</small>
                     </div>
-                    <!-- 內容 -->
-                    <p class="mb-1">
-                      <small class="text-light">#情報 免費領取! 現金一千萬等你來拿!</small>
-                    </p>
-                    <!-- 時間 -->
-                    <div class="fs-7 text-body-tertiary align-self-start ms-auto">13:00</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <!-- 訊息 -->
-            <li class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link position-relative dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                <span class="translate-middle badge position-absolute rounded-pill bg-danger">
-                  10
-                </span>
-                <img src="@/assets/images/msg.png" alt="msg" width="24" height="24" />
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end message border-light-subtle">
-                <li>
-                  <div class="d-flex p-2">
-                    <h6 class="fw-bold text-light me-auto mb-0">訊息</h6>
-                    <small class="text-light">全部已讀</small>
-                  </div>
-                </li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a href="#" class="dropdown-item d-flex align-items-center">
-                    <img
-                      src="@/assets/images/ellipse.png"
-                      class="me-2"
-                      alt="ellipse"
-                      width="8"
-                      height="8"
-                    />
-                    <!-- 圖示 -->
-                    <img
-                      src="@/assets/images/avatar06.png"
-                      class="rounded-circle object-fit-cover"
-                      alt="chat"
-                      width="42"
-                      height="42"
-                    />
-                    <div class="ms-2">
-                      <div class="d-flex">
-                        <!-- 留言者 -->
-                        <small class="text-light fw-bold">小美</small>
-                        <!-- 時間 -->
-                        <div class="fs-7 text-body-tertiary ms-auto">13:00</div>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a href="#" class="dropdown-item d-flex align-items-center">
+                      <img
+                        src="@/assets/images/ellipse.png"
+                        class="me-2"
+                        alt="ellipse"
+                        width="8"
+                        height="8"
+                      />
+                      <!-- 圖示 -->
+                      <div
+                        class="rounded-circle opacity-50 bg-dark notify-icon d-flex align-items-center me-3"
+                      >
+                        <img
+                          src="@/assets/images/chat.png"
+                          class="mx-auto"
+                          alt="chat"
+                          width="24"
+                          height="24"
+                        />
                       </div>
                       <!-- 內容 -->
-                      <p class="text-light mb-0">
-                        <small>阿呆，你最近都不理我，你484在外面有別的女人!!!</small>
+                      <p class="mb-1">
+                        <small class="text-light">#情報 免費領取! 現金一千萬等你來拿!</small>
                       </p>
+                      <!-- 時間 -->
+                      <div class="fs-7 text-body-tertiary align-self-start ms-auto">13:00</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- 訊息 -->
+              <li class="nav-item dropdown me-3">
+                <a href="" class="nav-link position-relative" data-bs-toggle="dropdown">
+                  <img src="@/assets/images/msg.png" alt="msg" width="24" height="24" />
+                  <span class="badge-num"> 10 </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end message border-light-subtle">
+                  <li>
+                    <div class="d-flex p-2">
+                      <h6 class="fw-bold text-light me-auto mb-0">訊息</h6>
+                      <small class="text-light">全部已讀</small>
                     </div>
-                  </a>
-                </li>
-              </ul>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a href="#" class="dropdown-item d-flex align-items-center">
+                      <img
+                        src="@/assets/images/ellipse.png"
+                        class="me-2"
+                        alt="ellipse"
+                        width="8"
+                        height="8"
+                      />
+                      <!-- 圖示 -->
+                      <img
+                        src="@/assets/images/avatar06.png"
+                        class="rounded-circle object-fit-cover"
+                        alt="chat"
+                        width="42"
+                        height="42"
+                      />
+                      <div class="ms-2">
+                        <div class="d-flex">
+                          <!-- 留言者 -->
+                          <small class="text-light fw-bold">小美</small>
+                          <!-- 時間 -->
+                          <div class="fs-7 text-body-tertiary ms-auto">13:00</div>
+                        </div>
+                        <!-- 內容 -->
+                        <p class="text-light mb-0">
+                          <small>阿呆，你最近都不理我，你484在外面有別的女人!!!</small>
+                        </p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- 個人資料 -->
+              <li class="nav-item dropdown">
+                <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                  <img
+                    src="@/assets/images/avatar06.png"
+                    alt="avatar"
+                    class="rounded-circle"
+                    width="24"
+                    height="24"
+                  />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end settings border-light-subtle">
+                  <li>
+                    <router-link class="dropdown-item" to="/user/profile">
+                      <img
+                        src="@/assets/images/wall.png"
+                        class="me-2"
+                        alt="profile"
+                        width="16"
+                        height="16"
+                      />
+                      <span class="align-middle">我的個人牆</span>
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link class="dropdown-item" to="/user/message">
+                      <img
+                        src="@/assets/images/comment.png"
+                        class="me-2"
+                        alt="message"
+                        width="16"
+                        height="16"
+                      />
+                      <span class="align-middle">我的訊息</span>
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link class="dropdown-item" to="/user/follow">
+                      <img
+                        src="@/assets/images/followed.png"
+                        class="me-2"
+                        alt="follow"
+                        width="16"
+                        height="16"
+                      />
+                      <span class="align-middle">我的追蹤</span>
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link class="dropdown-item" to="/user/favorite">
+                      <img
+                        src="@/assets/images/bookmark-outline.png"
+                        class="me-2"
+                        alt="favorite"
+                        width="16"
+                        height="16"
+                      />
+                      <span class="align-middle">我的收藏</span>
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link class="dropdown-item" to="/user/settings">
+                      <img
+                        src="@/assets/images/setting.png"
+                        class="me-2"
+                        alt="settings"
+                        width="16"
+                        height="16"
+                      />
+                      <span class="align-middle">個人設定</span>
+                    </router-link>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a href="#" class="dropdown-item" @click="logout">
+                      <img
+                        src="@/assets/images/logout.png"
+                        class="me-2"
+                        alt="logout"
+                        width="16"
+                        height="16"
+                      />
+                      <span class="align-middle">登出</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </template>
+            <!-- 未登入 -->
+            <li class="nav-item" v-else>
+              <router-link to="/login" class="btn btn-secondary rounded-1">登入</router-link>
             </li>
-            <!-- 個人資料 -->
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img
-                  src="@/assets/images/avatar06.png"
-                  alt="avatar"
-                  class="rounded-circle"
-                  width="24"
-                  height="24"
-                />
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end settings border-light-subtle">
-                <li>
-                  <router-link class="dropdown-item" to="/user/profile">
-                    <img
-                      src="@/assets/images/wall.png"
-                      class="me-2"
-                      alt="profile"
-                      width="16"
-                      height="16"
-                    />
-                    <span class="align-middle">我的個人牆</span>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link class="dropdown-item" to="/user/message">
-                    <img
-                      src="@/assets/images/comment.png"
-                      class="me-2"
-                      alt="message"
-                      width="16"
-                      height="16"
-                    />
-                    <span class="align-middle">我的訊息</span>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link class="dropdown-item" to="/user/follow">
-                    <img
-                      src="@/assets/images/followed.png"
-                      class="me-2"
-                      alt="follow"
-                      width="16"
-                      height="16"
-                    />
-                    <span class="align-middle">我的追蹤</span>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link class="dropdown-item" to="/user/favorite">
-                    <img
-                      src="@/assets/images/bookmark-outline.png"
-                      class="me-2"
-                      alt="favorite"
-                      width="16"
-                      height="16"
-                    />
-                    <span class="align-middle">我的收藏</span>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link class="dropdown-item" to="/user/settings">
-                    <img
-                      src="@/assets/images/setting.png"
-                      class="me-2"
-                      alt="settings"
-                      width="16"
-                      height="16"
-                    />
-                    <span class="align-middle">個人設定</span>
-                  </router-link>
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a href="#" class="dropdown-item" @click="logout">
-                    <img
-                      src="@/assets/images/logout.png"
-                      class="me-2"
-                      alt="logout"
-                      width="16"
-                      height="16"
-                    />
-                    <span class="align-middle">登出</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </template>
-          <!-- 未登入 -->
-          <li class="nav-item" v-else>
-            <router-link to="/login" class="btn btn-secondary">登入</router-link>
-          </li>
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 </template>
 
-<style lang="scss" scoped>
-.nav-link .badge {
+<style scoped>
+header > .navbar {
+  height: 60px;
+}
+/* .nav-link .badge {
   top: 12px;
   right: -12px;
-}
+} */
 .notify-icon {
   width: 42px;
   height: 42px;
 }
-// .dropdown-menu::before,
-// .dropdown-menu::after {
-//   border: solid transparent;
-//   content: '';
-//   width: 0;
-//   height: 0;
-//   position: absolute;
-//   // border-width: 0 10px 10px 10px;
-//   // border-bottom-color: #1d2938;
-// }
-// .dropdown-menu::before {
-//   border-width: 0 10px 10px 10px;
-//   border-bottom-color: #4c5a67;
-// }
-// .dropdown-menu::after {
-//   border-width: 0 12px 12px 12px;
-//   border-bottom-color: #1d2938;
-// }
-// .notify::before,
-// .message::before {
-//   top: -10px;
-//   left: 60px;
-// }
-// .notify::after,
-// .message::after {
-//   top: -9px;
-//   left: 58px;
-// }
-// .settings::before {
-//   top: -10px;
-//   left: 35px;
-// }
-// .settings::after {
-//   top: -9px;
-//   left: 33px;
-// }
+.badge-num {
+  color: #fff;
+  width: 30px;
+  height: 20px;
+  background: #991f1f;
+  border-radius: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 20px;
+  top: 0;
+  font-size: 12px;
+}
+/*.dropdown-menu::before,
+.dropdown-menu::after {
+  border: solid transparent;
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  // border-width: 0 10px 10px 10px;
+  // border-bottom-color: #1d2938;
+}
+.dropdown-menu::before {
+  border-width: 0 10px 10px 10px;
+  border-bottom-color: #4c5a67;
+}
+.dropdown-menu::after {
+  border-width: 0 12px 12px 12px;
+  border-bottom-color: #1d2938;
+}
+.notify::before,
+.message::before {
+  top: -10px;
+  left: 60px;
+}
+.notify::after,
+.message::after {
+  top: -9px;
+  left: 58px;
+}
+.settings::before {
+  top: -10px;
+  left: 35px;
+}
+.settings::after {
+  top: -9px;
+  left: 33px;
+}
+  */
 </style>

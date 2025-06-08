@@ -98,13 +98,14 @@ const signup = async () => {
           </div>
         </div>
 
-        <div
-          class="col-lg-7 bg-p-center"
-          style="background-image: url(@/assets/images/signup.png)"
-        ></div>
+        <div class="col-lg-7 bg-p-center signup-bg"></div>
       </div>
     </div>
   </section>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.signup-bg {
+  background-image: url(../../assets/images/signup.png);
+}
+</style>

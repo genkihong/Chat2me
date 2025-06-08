@@ -30,21 +30,26 @@ const router = createRouter({
       component: () => import('../views/auth/ResetPassword.vue'),
     },
     {
+      path: '/article/new', //新增文章
+      name: 'NewArticle',
+      component: () => import('../views/article/NewArticle.vue'),
+    },
+    {
       path: '/',
       component: () => import('../views/Index.vue'),
       children: [
         {
           path: '',
-          name: 'Home',
+          name: 'Home', // 首頁
           component: () => import('../views/Main.vue'),
         },
         {
-          path: 'forums',
+          path: 'forums', //所有看板
           name: 'Forums',
           component: () => import('../views/Forums.vue'),
         },
         {
-          path: 'popular',
+          path: 'popular', //熱門看板
           name: 'Popular',
           component: () => import('../views/Popular.vue'),
         },
@@ -55,31 +60,31 @@ const router = createRouter({
       component: () => import('../views/user/Index.vue'),
       children: [
         {
-          path: 'profile', // /user/profile
+          path: 'profile', //個人牆
           name: 'Profile',
           component: () => import('../views/user/Profile.vue'),
           meta: { requiresAuth: true },
         },
         {
-          path: 'message', // /user/message
+          path: 'message', //訊息
           name: 'Message',
           component: () => import('../views/user/Message.vue'),
           meta: { requiresAuth: true },
         },
         {
-          path: 'follow', // /user/forum
+          path: 'follow', //已追蹤看板
           name: 'Follow',
           component: () => import('../views/user/FollowForum.vue'),
           meta: { requiresAuth: true },
         },
         {
-          path: 'favorite', // /user/article
+          path: 'favorite', //已收藏文章
           name: 'Favorite',
           component: () => import('../views/user/FavoriteArticle.vue'),
           meta: { requiresAuth: true },
         },
         {
-          path: 'settings', // /user
+          path: 'settings', //個人設定
           name: 'User',
           component: () => import('../views/user/Settings.vue'),
           meta: { requiresAuth: true },

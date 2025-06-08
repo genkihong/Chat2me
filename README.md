@@ -23,6 +23,8 @@ npm run build
 - Vite
 - Vue3 Composition API
 - VueRouter
+- ckeditor5
+- ckeditor5-vue
 - Pinia
 - axios
 - Bootstrap5

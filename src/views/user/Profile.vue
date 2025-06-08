@@ -62,11 +62,11 @@ const uploadImage = async () => {
           <img src="@/assets/images/camera.png" alt="camera" width="24" height="24" />
         </button>
         <input
+          ref="fileInput"
           type="file"
           class="d-none"
-          @change="handleFileChange"
           accept="image/*"
-          ref="fileInput"
+          @change="handleFileChange"
         />
         <h3 class="text-secondary mt-3">我是來自東方的龍</h3>
         <small class="text-body-tertiary">@taiwan1</small>

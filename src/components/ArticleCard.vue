@@ -1,5 +1,5 @@
 <script setup>
-import { getImageUrl } from '@/util'
+import { getIconUrl } from '@/utils'
 
 const props = defineProps({
   forumTitle: {
@@ -39,7 +39,7 @@ const props = defineProps({
       <div class="d-flex align-items-center mb-4">
         <!-- 看板圖示 -->
         <div class="rounded-circle opacity-50 bg-dark forum-icon d-flex align-items-center me-3">
-          <img :src="getImageUrl(icon)" class="mx-auto" alt="image" width="24" height="24" />
+          <img :src="getIconUrl(icon)" class="mx-auto" alt="image" width="24" height="24" />
         </div>
         <div class="me-auto">
           <!-- 看板標題 -->
@@ -55,9 +55,10 @@ const props = defineProps({
       <!-- 文章標題 -->
       <h5 class="fw-bold text-light">{{ articleTitle }}</h5>
       <!-- 文章內容 -->
-      <p class="text-secondary mb-4">
+      <!-- <p class="text-secondary mb-4">
         {{ articleContent }}
-      </p>
+      </p> -->
+      <div class="text-secondary mb-4" v-html="articleContent"></div>
       <div class="article-footer d-flex align-items-center text-secondary">
         <!-- 按讚數 -->
         <div class="d-flex align-items-center me-5" role="button">
@@ -79,9 +80,16 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped>
+<style>
 .forum-icon {
   width: 50px;
   height: 50px;
+}
+.image_resized,
+.image_resized > img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  object-position: left center;
 }
 </style>

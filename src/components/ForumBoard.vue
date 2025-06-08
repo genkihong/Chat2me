@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { getImageUrl } from '@/util'
+import { getIconUrl } from '@/utils'
 
 const props = defineProps({
   title: {
@@ -25,7 +25,7 @@ const btnText = computed(() => {
 <template>
   <div class="d-flex align-items-center mb-3">
     <div class="rounded-circle bg-dark-subtle forum-icon d-flex align-items-center me-3">
-      <img :src="getImageUrl(icon)" class="mx-auto" alt="image" width="24" height="24" />
+      <img :src="getIconUrl(icon)" class="mx-auto" alt="image" width="24" height="24" />
     </div>
     <h6 class="text-secondary mb-0 me-auto">{{ title }}</h6>
     <button class="btn btn-sm" :class="[isFllowed ? 'btn-followed' : 'btn-custom']">

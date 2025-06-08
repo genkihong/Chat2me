@@ -6,7 +6,7 @@
       <div class="row">
         <!-- side menu -->
         <div class="col-lg-2 d-none d-lg-block">
-          <div class="list-group rounded-0">
+          <div class="list-group rounded-0 sidemenu position-sticky">
             <router-link to="/user/profile" class="list-group-item list-group-item-action p-3">
               <img
                 src="@/assets/images/wall.png"
@@ -68,4 +68,8 @@
   </section>
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.sidemenu {
+  top: 60px;
+}
+</style>

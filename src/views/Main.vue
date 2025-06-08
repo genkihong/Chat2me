@@ -17,7 +17,7 @@ onMounted(async () => {
 
 <template>
   <!-- 切換Tab -->
-  <ul class="nav nav-underline">
+  <ul class="nav nav-underline position-sticky nav-tab bg-dark z-1">
     <li class="nav-item">
       <button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#hot">
         <div class="text-secondary">熱門</div>
@@ -42,4 +42,8 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.nav-tab {
+  top: 60px;
+}
+</style>

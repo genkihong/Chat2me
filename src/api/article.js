@@ -8,3 +8,7 @@ export const apiPopularArticleList = (cursor, limit) => {
 export const apiLatestArticleList = (cursor, limit) => {
   return http.get('/article/latest', { params: { cursor, limit } })
 }
+//發表文章
+export const apiAddArticle = (data) => http.post('/article', data)
+//上傳文章圖片
+export const apiUpload = (formData) => http.post('/article/upload', formData)

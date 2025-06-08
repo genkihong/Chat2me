@@ -1,58 +1,67 @@
 <script setup>
-import { getImageUrl } from '@/util'
+import { useForumStore } from '@/stores/forumStore'
+import { getIconUrl } from '@/utils'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 
-const sidebarItems = [
+const forumStore = useForumStore()
+const { forumList } = storeToRefs(forumStore)
+
+const sidebarList = [
   {
-    title: '工作板',
+    forum_name: '工作板',
     path: '#',
-    icon: 'job',
+    forum_icon: 'job',
   },
   {
-    title: '美食板',
+    forum_name: '美食板',
     path: '#',
-    icon: 'food',
+    forum_icon: 'food',
   },
   {
-    title: 'Youtube板',
+    forum_name: 'Youtube板',
     path: '#',
-    icon: 'youtube',
+    forum_icon: 'youtube',
   },
   {
-    title: '交友板',
+    forum_name: '交友板',
     path: '#',
-    icon: 'friends',
+    forum_icon: 'friends',
   },
   {
-    title: '女孩板',
+    forum_name: '女孩板',
     path: '#',
-    icon: 'girl',
+    forum_icon: 'girl',
   },
   {
-    title: '感情板',
+    forum_name: '感情板',
     path: '#',
-    icon: 'love',
+    forum_icon: 'love',
   },
   {
-    title: '遊戲板',
+    forum_name: '遊戲板',
     path: '#',
-    icon: 'game',
+    forum_icon: 'game',
   },
   {
-    title: '閒聊板',
+    forum_name: '閒聊板',
     path: '#',
-    icon: 'chat',
+    forum_icon: 'chat',
   },
   {
-    title: '3C板',
+    forum_name: '3C板',
     path: '#',
-    icon: '3c',
+    forum_icon: '3c',
   },
   {
-    title: 'Apple板',
+    forum_name: 'Apple板',
     path: '#',
-    icon: 'apple',
+    forum_icon: 'apple',
   },
 ]
+onMounted(() => {
+  forumStore.getForumList()
+})
 </script>
 
 <template>
@@ -61,46 +70,53 @@ const sidebarItems = [
       <div class="row">
         <!-- Sidebar -->
         <div class="col-lg-2">
-          <div class="list-group rounded-0">
-            <router-link to="forums" class="list-group-item list-group-item-action p-3">
-              <img
-                src="@/assets/images/board.png"
-                class="me-2"
-                alt="board"
-                width="20"
-                height="20"
-              />
-              <span class="align-middle">所有看板</span>
-            </router-link>
-            <router-link to="popular" class="list-group-item list-group-item-action p-3">
-              <img src="@/assets/images/hot.png" class="me-2" alt="hot" width="20" height="20" />
-              <span class="align-middle">即時熱門看板</span>
-            </router-link>
-          </div>
-
-          <div class="p-3">
-            <small class="text-secondary">即時熱門看板</small>
-          </div>
-          <!-- 看板選單 -->
-          <div class="list-group rounded-0">
-            <a
-              href="#"
-              class="list-group-item list-group-item-action p-3"
-              v-for="item in sidebarItems"
-              :key="item.title"
-            >
-              <img :src="getImageUrl(item.icon)" class="me-3" alt="icon" width="20" height="20" />
-              <span class="align-middle">{{ item.title }}</span>
-            </a>
-            <!-- <router-link
-              to="#"
-              class="list-group-item list-group-item-action p-3"
-              v-for="item in sidebarItems"
-              :key="item"
-            >
-              <img :src="item.icon" class="me-2" alt="" width="20" />
-              <span class="align-middle">{{ item.title }}</span>
-            </router-link> -->
+          <div class="sidemenu position-sticky">
+            <div class="list-group rounded-0">
+              <router-link to="forums" class="list-group-item list-group-item-action p-3">
+                <img
+                  src="@/assets/images/board.png"
+                  class="me-2"
+                  alt="board"
+                  width="20"
+                  height="20"
+                />
+                <span class="align-middle">所有看板</span>
+              </router-link>
+              <router-link to="popular" class="list-group-item list-group-item-action p-3">
+                <img src="@/assets/images/hot.png" class="me-2" alt="hot" width="20" height="20" />
+                <span class="align-middle">即時熱門看板</span>
+              </router-link>
+            </div>
+            <div class="p-3">
+              <small class="text-secondary">即時熱門看板</small>
+            </div>
+            <!-- 看板選單 -->
+            <div class="list-group rounded-0">
+              <a
+                href="#"
+                class="list-group-item list-group-item-action p-3"
+                v-for="item in sidebarList"
+                :key="item.forum_id"
+              >
+                <img
+                  :src="getIconUrl(item.forum_icon)"
+                  class="me-3"
+                  alt="icon"
+                  width="20"
+                  height="20"
+                />
+                <span class="align-middle">{{ item.forum_name }}</span>
+              </a>
+              <!-- <router-link
+                to="#"
+                class="list-group-item list-group-item-action p-3"
+                v-for="item in sidebarItems"
+                :key="item"
+              >
+                <img :src="item.icon" class="me-2" alt="" width="20" />
+                <span class="align-middle">{{ item.title }}</span>
+              </router-link> -->
+            </div>
           </div>
         </div>
         <div class="col-lg-10">
@@ -111,4 +127,8 @@ const sidebarItems = [
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.sidemenu {
+  top: 60px;
+}
+</style>

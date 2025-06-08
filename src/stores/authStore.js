@@ -67,6 +67,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.name = null
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    router.push('/')
   }
   //忘記密碼
   const forgetPassword = async (email) => {
