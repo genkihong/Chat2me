@@ -1,10 +1,33 @@
 <script setup>
+import { onMounted } from 'vue'
 import ForumBoard from '@/components/ForumBoard.vue'
+import { useForumStore } from '@/stores/forumStore'
+import { storeToRefs } from 'pinia'
+import { getIconUrl } from '@/utils'
+
+const forumStore = useForumStore()
+const { forumList } = storeToRefs(forumStore)
+
+onMounted(() => {
+  forumStore.getForumList()
+})
 </script>
 
 <template>
   <h4 class="fw-bold text-secondary mb-5">看板分類</h4>
-  <div class="accordion">
+  <div class="card bg-dark">
+    <div class="card-body">
+      <ForumBoard
+        v-for="item of forumList"
+        :key="item.forum_id"
+        :title="item.forum_name"
+        :icon="item.icon"
+        :is-fllowed="false"
+      />
+    </div>
+  </div>
+
+  <!-- <div class="accordion">
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
@@ -26,7 +49,7 @@ import ForumBoard from '@/components/ForumBoard.vue'
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped></style>

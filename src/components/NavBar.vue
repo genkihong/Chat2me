@@ -465,7 +465,7 @@ onMounted(() => {
             </li>
           </template>
           <!-- 未登入 -->
-          <li class="nav-item" v-else>
+          <li class="nav-item mb-3" v-else>
             <router-link to="/login" class="btn btn-secondary rounded-1" @click="close"
               >登入</router-link
             >

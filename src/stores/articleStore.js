@@ -1,13 +1,13 @@
-import { ref, reactive } from 'vue'
-import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
 import {
   apiAddArticle,
-  apiUpload,
-  apiPopularArticleList,
   apiLatestArticleList,
+  apiPopularArticleList,
+  apiUpload,
 } from '@/api/article'
 import { mapIcon } from '@/utils'
+import { defineStore } from 'pinia'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 
 export const useArticleStore = defineStore('article', () => {
@@ -24,7 +24,7 @@ export const useArticleStore = defineStore('article', () => {
     popular: [],
     latest: [],
   })
-  const title = ['youtube', 'netflix', 'apple', '3C']
+  const title = ['youtube', 'netflix', 'apple']
 
   //清除資料
   const resetData = () => {

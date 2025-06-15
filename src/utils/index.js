@@ -18,7 +18,7 @@ export const mapIcon = (forumName) => {
     },
     {
       forum_name: '3C',
-      forum_icon: '3C',
+      forum_icon: '3c',
     },
     {
       forum_name: '工作',
