@@ -7,6 +7,7 @@ import {
   apiPopularArticleList,
   apiLatestArticleList,
 } from '@/api/article'
+import { mapIcon } from '@/utils'
 import { toast } from 'vue3-toastify'
 
 export const useArticleStore = defineStore('article', () => {
@@ -23,6 +24,8 @@ export const useArticleStore = defineStore('article', () => {
     popular: [],
     latest: [],
   })
+  const title = ['youtube', 'netflix', 'apple', '3C']
+
   //清除資料
   const resetData = () => {
     article.forum_id = 1
@@ -35,14 +38,24 @@ export const useArticleStore = defineStore('article', () => {
   const getPopularArticleList = async (cursor = 1, limit = 20) => {
     try {
       const res = await apiPopularArticleList(cursor, limit)
-      articleList.popular = res.data.data
+      articleList.popular = res.data.data.map((item) => {
+        if (!title.includes(item.forumTitle)) {
+          item.icon = mapIcon(item.forumTitle)
+        }
+        return item
+      })
     } catch (error) {}
   }
   //最新文章
   const getLatestArticleList = async (cursor = 1, limit = 20) => {
     try {
       const res = await apiLatestArticleList(cursor, limit)
-      articleList.latest = res.data.data
+      articleList.latest = res.data.data.map((item) => {
+        if (!title.includes(item.forumTitle)) {
+          item.icon = mapIcon(item.forumTitle)
+        }
+        return item
+      })
     } catch (error) {}
   }
   //發表文章

@@ -1,8 +1,8 @@
 <script setup>
-import { useForumStore } from '@/stores/forumStore'
-import { getIconUrl } from '@/utils'
-import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
+import { useForumStore } from '@/stores/forumStore'
+import { storeToRefs } from 'pinia'
+import { getIconUrl } from '@/utils'
 
 const forumStore = useForumStore()
 const { forumList } = storeToRefs(forumStore)
@@ -51,7 +51,7 @@ const sidebarList = [
   {
     forum_name: '3C板',
     path: '#',
-    forum_icon: '3c',
+    forum_icon: '3C',
   },
   {
     forum_name: 'Apple板',
@@ -69,7 +69,7 @@ onMounted(() => {
     <div class="container">
       <div class="row">
         <!-- Sidebar -->
-        <div class="col-lg-2">
+        <div class="col-lg-2 d-none d-lg-block">
           <div class="sidemenu position-sticky">
             <div class="list-group rounded-0">
               <router-link to="forums" class="list-group-item list-group-item-action p-3">
@@ -95,16 +95,10 @@ onMounted(() => {
               <a
                 href="#"
                 class="list-group-item list-group-item-action p-3"
-                v-for="item in sidebarList"
+                v-for="item in forumList"
                 :key="item.forum_id"
               >
-                <img
-                  :src="getIconUrl(item.forum_icon)"
-                  class="me-3"
-                  alt="icon"
-                  width="20"
-                  height="20"
-                />
+                <img :src="getIconUrl(item.icon)" class="me-3" alt="icon" width="20" height="20" />
                 <span class="align-middle">{{ item.forum_name }}</span>
               </a>
               <!-- <router-link
