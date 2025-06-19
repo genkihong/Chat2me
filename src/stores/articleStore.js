@@ -1,5 +1,6 @@
 import {
   apiAddArticle,
+  apiGetArticle,
   apiLatestArticleList,
   apiPopularArticleList,
   apiUpload,
@@ -14,6 +15,20 @@ export const useArticleStore = defineStore('article', () => {
   const router = useRouter()
   const imageUrl = ref('')
   const article = reactive({
+    forumTitle: '看板標題',
+    followed: false,
+    articleTitle: '文章標題',
+    articleContent: [],
+    tag: [],
+    postDate: '',
+    count: {
+      like: 0,
+      collect: 0,
+      comment: 0,
+    },
+    comments: [],
+  })
+  const newArticle = reactive({
     forum_id: 1,
     title: '測試文章標題',
     content: '測試文章內容',
@@ -28,11 +43,11 @@ export const useArticleStore = defineStore('article', () => {
 
   //清除資料
   const resetData = () => {
-    article.forum_id = 1
-    article.title = null
-    article.content = null
-    article.image_url.length = 0
-    article.tag.length = 0
+    newArticle.forum_id = 1
+    newArticle.title = null
+    newArticle.content = null
+    newArticle.image_url.length = 0
+    newArticle.tag.length = 0
   }
   //熱門文章
   const getPopularArticleList = async (cursor = 1, limit = 20) => {
@@ -71,6 +86,14 @@ export const useArticleStore = defineStore('article', () => {
       }
     } catch (error) {}
   }
+  //單一文章
+  const getArticle = async (id) => {
+    try {
+      const res = await apiGetArticle(id)
+      Object.assign(article, res.data.data)
+      article.icon = mapIcon(article.forumTitle)
+    } catch (error) {}
+  }
   //上傳圖片
   const uploadImage = async (file) => {
     const formData = new FormData()
@@ -92,7 +115,9 @@ export const useArticleStore = defineStore('article', () => {
   return {
     imageUrl,
     article,
+    newArticle,
     articleList,
+    getArticle,
     uploadImage,
     getPopularArticleList,
     getLatestArticleList,

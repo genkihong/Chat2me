@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
+import ArticleCard from '@/components/ArticleCard.vue'
 import { useArticleStore } from '@/stores/articleStore'
 import { storeToRefs } from 'pinia'
-import ArticleCard from '@/components/ArticleCard.vue'
+import { onMounted } from 'vue'
 
 const articleStore = useArticleStore()
 const { articleList } = storeToRefs(articleStore)

@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -52,6 +52,11 @@ const router = createRouter({
           path: 'popular', //熱門看板
           name: 'Popular',
           component: () => import('../views/Popular.vue'),
+        },
+        {
+          path: 'article/:id', //熱門看板
+          name: 'Article',
+          component: () => import('../views/article/Index.vue'),
         },
       ],
     },

@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import 'bootstrap'
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 import Vue3Toastify from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 

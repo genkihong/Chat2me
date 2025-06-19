@@ -1,9 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
 import ForumBoard from '@/components/ForumBoard.vue'
 import { useForumStore } from '@/stores/forumStore'
 import { storeToRefs } from 'pinia'
-import { getIconUrl } from '@/utils'
+import { onMounted } from 'vue'
 
 const forumStore = useForumStore()
 const { forumList } = storeToRefs(forumStore)

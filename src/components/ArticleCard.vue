@@ -2,6 +2,10 @@
 import { getIconUrl } from '@/utils'
 
 const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
   forumTitle: {
     type: String,
     required: true,
@@ -52,30 +56,34 @@ const props = defineProps({
         <!-- 發表日期 -->
         <small class="text-body-tertiary align-self-start">{{ postDate }}</small>
       </div>
-      <!-- 文章標題 -->
-      <h5 class="fw-bold text-light">{{ articleTitle }}</h5>
-      <!-- 文章內容 -->
-      <!-- <p class="text-secondary mb-4">
-        {{ articleContent }}
-      </p> -->
-      <div class="text-secondary mb-4" v-html="articleContent"></div>
-      <div class="article-footer d-flex align-items-center text-secondary">
-        <!-- 按讚數 -->
-        <div class="d-flex align-items-center me-5" role="button">
-          <img src="@/assets/images/heart-outline.png" class="me-1" alt="heart" width="20" />
-          <span>{{ count.like }}</span>
+      <router-link :to="`article/${id}`">
+        <!-- 文章標題 -->
+        <h5 class="fw-bold text-light">{{ articleTitle }}</h5>
+        <!-- 文章內容 -->
+        <div class="text-secondary mb-4" v-html="articleContent"></div>
+        <div class="article-footer d-flex align-items-center text-secondary">
+          <!-- 按讚數 -->
+          <div class="d-flex align-items-center me-5" role="button">
+            <img src="@/assets/images/heart-outline.png" class="me-1" alt="heart" width="20" />
+            <span>{{ count.like }}</span>
+          </div>
+          <!-- 留言數 -->
+          <div class="d-flex align-items-center me-5" role="button">
+            <img src="@/assets/images/comment.png" class="me-1" alt="comment" width="20" />
+            <span>{{ count.collect }}</span>
+          </div>
+          <!-- 收藏數 -->
+          <div class="d-flex align-items-center" role="button">
+            <img
+              src="@/assets/images/bookmark-outline.png"
+              class="me-1"
+              alt="bookmark"
+              width="20"
+            />
+            <span>{{ count.comment }}</span>
+          </div>
         </div>
-        <!-- 留言數 -->
-        <div class="d-flex align-items-center me-5" role="button">
-          <img src="@/assets/images/comment.png" class="me-1" alt="comment" width="20" />
-          <span>{{ count.collect }}</span>
-        </div>
-        <!-- 收藏數 -->
-        <div class="d-flex align-items-center" role="button">
-          <img src="@/assets/images/bookmark-outline.png" class="me-1" alt="bookmark" width="20" />
-          <span>{{ count.comment }}</span>
-        </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

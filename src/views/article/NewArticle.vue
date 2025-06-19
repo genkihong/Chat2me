@@ -1,16 +1,16 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
+import '@/assets/styles/custom-ckeditor.css'
 import { useArticleStore } from '@/stores/articleStore'
 import { useForumStore } from '@/stores/forumStore'
+import CustomUploadAdapter from '@/utils/custom-upload-adapter.js'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 import {
-  ClassicEditor,
   Alignment,
   Autoformat,
   AutoImage,
   Autosave,
   Bold,
+  ClassicEditor,
   Essentials,
   FontBackgroundColor,
   FontColor,
@@ -41,14 +41,14 @@ import {
   TextTransformation,
   Underline,
 } from 'ckeditor5'
-import CustomUploadAdapter from '@/utils/custom-upload-adapter.js'
 import 'ckeditor5/ckeditor5.css'
-import '@/assets/styles/custom-ckeditor.css'
+import { storeToRefs } from 'pinia'
+import { computed, onMounted } from 'vue'
 
 const articleStore = useArticleStore()
 const forumStore = useForumStore()
 
-const { article } = storeToRefs(articleStore)
+const { newArticle } = storeToRefs(articleStore)
 const { forumList } = storeToRefs(forumStore)
 
 const editor = ClassicEditor
@@ -233,7 +233,7 @@ const config = computed(() => {
 })
 
 const addArticle = async () => {
-  articleStore.postNewArticle(article.value)
+  articleStore.postNewArticle(newArticle.value)
 }
 
 const onReady = (editorInstance) => {
@@ -262,7 +262,7 @@ onMounted(() => {
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="forum">選擇看板</label>
-                  <select id="forum" class="form-select" v-model="article.forum_id">
+                  <select id="forum" class="form-select" v-model="newArticle.forum_id">
                     <option :value="item.forum_id" v-for="item of forumList" :key="item.forum_id">
                       {{ item.forum_name }}
                     </option>
@@ -270,12 +270,12 @@ onMounted(() => {
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="title" class="form-label">文章標題</label>
-                  <input id="title" type="text" class="form-control" v-model="article.title" />
+                  <input id="title" type="text" class="form-control" v-model="newArticle.title" />
                 </div>
               </div>
               <div class="mb-3">
                 <ckeditor
-                  v-model="article.content"
+                  v-model="newArticle.content"
                   :editor="editor"
                   :config="config"
                   @ready="onReady"

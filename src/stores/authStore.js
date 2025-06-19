@@ -1,7 +1,7 @@
-import { ref, reactive, computed } from 'vue'
+import { apiForgetPassword, apiLogin, apiResetPassword, apiSignup } from '@/api/auth'
 import { defineStore } from 'pinia'
+import { computed, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { apiSignup, apiLogin, apiForgetPassword, apiResetPassword } from '@/api/auth'
 import { toast } from 'vue3-toastify'
 
 export const useAuthStore = defineStore('auth', () => {

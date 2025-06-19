@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
+import { ref } from 'vue'
 import { toast } from 'vue3-toastify'
 
 const name = ref('')

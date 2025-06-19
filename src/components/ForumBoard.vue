@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from 'vue'
 import { getIconUrl } from '@/utils'
+import { computed } from 'vue'
 
 const props = defineProps({
   title: {

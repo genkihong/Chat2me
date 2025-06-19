@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
+import { ref } from 'vue'
 
 const email = ref('')
 

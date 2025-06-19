@@ -1,14 +1,6 @@
-import { reactive } from 'vue'
+import { apiGetUser, apiUpdateUser, apiUpload } from '@/api/user'
 import { defineStore } from 'pinia'
-import {
-  apiGetUser,
-  apiProfile,
-  apiArticle,
-  apiForum,
-  apiMessage,
-  apiUpdateUser,
-  apiUpload,
-} from '@/api/user'
+import { reactive } from 'vue'
 import { toast } from 'vue3-toastify'
 
 export const useUserStore = defineStore('user', () => {
