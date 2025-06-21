@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 
 const forumStore = useForumStore()
-const { forumList } = storeToRefs(forumStore)
+const { forum } = storeToRefs(forumStore)
 
 const sidebarList = [
   {
@@ -72,7 +72,7 @@ onMounted(() => {
         <div class="col-lg-2 d-none d-lg-block">
           <div class="sidemenu position-sticky">
             <div class="list-group rounded-0">
-              <router-link to="forums" class="list-group-item list-group-item-action p-3">
+              <RouterLink to="forums" class="list-group-item list-group-item-action p-3">
                 <img
                   src="@/assets/images/board.png"
                   class="me-2"
@@ -81,11 +81,11 @@ onMounted(() => {
                   height="20"
                 />
                 <span class="align-middle">所有看板</span>
-              </router-link>
-              <router-link to="popular" class="list-group-item list-group-item-action p-3">
+              </RouterLink>
+              <RouterLink to="popular" class="list-group-item list-group-item-action p-3">
                 <img src="@/assets/images/hot.png" class="me-2" alt="hot" width="20" height="20" />
                 <span class="align-middle">即時熱門看板</span>
-              </router-link>
+              </RouterLink>
             </div>
             <div class="p-3">
               <small class="text-secondary">即時熱門看板</small>
@@ -95,13 +95,13 @@ onMounted(() => {
               <a
                 href="#"
                 class="list-group-item list-group-item-action p-3"
-                v-for="item in forumList"
+                v-for="item in forum.all"
                 :key="item.forum_id"
               >
                 <img :src="getIconUrl(item.icon)" class="me-3" alt="icon" width="20" height="20" />
                 <span class="align-middle">{{ item.forum_name }}</span>
               </a>
-              <!-- <router-link
+              <!-- <RouterLink
                 to="#"
                 class="list-group-item list-group-item-action p-3"
                 v-for="item in sidebarItems"
@@ -109,7 +109,7 @@ onMounted(() => {
               >
                 <img :src="item.icon" class="me-2" alt="" width="20" />
                 <span class="align-middle">{{ item.title }}</span>
-              </router-link> -->
+              </RouterLink> -->
             </div>
           </div>
         </div>

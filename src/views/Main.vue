@@ -7,6 +7,12 @@ import { onMounted } from 'vue'
 const articleStore = useArticleStore()
 const { articleList } = storeToRefs(articleStore)
 
+const addLike = (id) => {
+  articleStore.addLike(id)
+}
+const addFavor = (id) => {
+  articleStore.addFavor(id)
+}
 onMounted(async () => {
   await Promise.allSettled([
     articleStore.getPopularArticleList(),
@@ -33,11 +39,23 @@ onMounted(async () => {
   <div class="tab-content">
     <!-- 熱門 -->
     <div class="tab-pane active pt-3" id="hot" role="tabpanel" tabindex="0">
-      <ArticleCard v-for="article of articleList.popular" :key="article.id" v-bind="article" />
+      <ArticleCard
+        v-for="article of articleList.popular"
+        :key="article.id"
+        v-bind="article"
+        @add-like="addLike"
+        @add-favor="addFavor"
+      />
     </div>
     <!-- 最新 -->
     <div class="tab-pane pt-3" id="latest" role="tabpanel" tabindex="0">
-      <ArticleCard v-for="article of articleList.latest" :key="article.id" v-bind="article" />
+      <ArticleCard
+        v-for="article of articleList.latest"
+        :key="article.id"
+        v-bind="article"
+        @add-like="addLike"
+        @add-favor="addFavor"
+      />
     </div>
   </div>
 </template>

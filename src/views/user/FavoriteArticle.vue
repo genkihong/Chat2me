@@ -1,22 +1,43 @@
-<script setup></script>
+<script setup>
+import { useArticleStore } from '@/stores/articleStore'
+import { useUserStore } from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
+const articleStore = useArticleStore()
+
+const deleteFavor = async (id) => {
+  await articleStore.deleteFavor(id)
+  userStore.getArticle()
+}
+onMounted(() => {
+  userStore.getArticle()
+})
+</script>
 
 <template>
   <div class="card bg-dark">
     <div class="card-body">
       <h4 class="mb-5">我的收藏</h4>
-      <div class="d-flex align-items-center border-bottom border-2 mb-3">
+      <div
+        class="d-flex align-items-center border-bottom border-2 mb-3"
+        v-for="item of user.articleList"
+        :key="item.articleId"
+      >
         <div class="me-auto">
           <h4 class="mb-2">
-            <span class="badge text-bg-secondary">閒聊</span>
+            <span class="badge text-bg-secondary">{{ item.forumTitle }}</span>
           </h4>
-          <p class="mb-3">工作心得 31歲離職我才明白：工作不是用來討生活，而是為了好好生活！</p>
+          <p class="mb-3" v-html="item.content"></p>
         </div>
-        <button class="btn border-dark-active">
+        <button class="btn border-dark-active" @click="deleteFavor(item.articleId)">
           <img src="@/assets/images/bookmark.png" alt="bookmark" width="24" height="24" />
         </button>
       </div>
 
-      <div class="d-flex align-items-center border-bottom border-2 mb-3">
+      <!-- <div class="d-flex align-items-center border-bottom border-2 mb-3">
         <div class="me-auto">
           <h4 class="mb-2">
             <span class="badge text-bg-secondary">YouTuber</span>
@@ -26,7 +47,7 @@
         <button class="btn border-dark-active">
           <img src="@/assets/images/bookmark.png" alt="bookmark" width="24" height="24" />
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

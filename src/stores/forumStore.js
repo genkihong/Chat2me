@@ -1,16 +1,20 @@
-import { apiForumList } from '@/api/forum'
+import { apiDelFollow, apiFollow, apiForumList, apiPopular } from '@/api/forum'
 import { mapIcon } from '@/utils'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { reactive } from 'vue'
+import { toast } from 'vue3-toastify'
 
 export const useForumStore = defineStore('forum', () => {
-  const forumList = ref([])
+  const forum = reactive({
+    all: [],
+    popular: [],
+  })
 
   //所有看板
   const getForumList = async () => {
     try {
       const res = await apiForumList()
-      forumList.value = res.data.data.map((item) => {
+      forum.all = res.data.data.map((item) => {
         return {
           ...item,
           icon: mapIcon(item.forum_name),
@@ -18,8 +22,49 @@ export const useForumStore = defineStore('forum', () => {
       })
     } catch (error) {}
   }
+  //所有看板
+  const getPopular = async () => {
+    try {
+      const res = await apiPopular()
+      forum.popular = res.data.data.map((item) => {
+        return {
+          ...item,
+          icon: mapIcon(item.forum_name),
+        }
+      })
+    } catch (error) {}
+  }
+  //追蹤看板
+  const addFollow = async ({ userId, forumId }) => {
+    try {
+      const res = await apiFollow({ userId, forumId })
+      toast.success(res.data.message, {
+        theme: 'colored',
+      })
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
+    }
+  }
+  //取消追蹤
+  const deleteFollow = async (id) => {
+    try {
+      const res = await apiDelFollow(id)
+      toast.success(res.data.message, {
+        theme: 'colored',
+      })
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
+    }
+  }
   return {
-    forumList,
+    forum,
+    getPopular,
     getForumList,
+    addFollow,
+    deleteFollow,
   }
 })

@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import ProfileArticle from '@/components/ProfileArticle.vue'
 import { useUserStore } from '@/stores/userStore'
-import ArticleCard from '@/components/ArticleCard.vue'
+import { storeToRefs } from 'pinia'
+import { onMounted, ref } from 'vue'
 
 const userStore = useUserStore()
+const { profile } = storeToRefs(userStore)
 
 const fileInput = ref(null)
 const selectedFile = ref(null)
@@ -13,15 +15,6 @@ const previewUrl = ref(null)
 const triggerFileInput = () => {
   fileInput.value.click()
 }
-//選擇上傳圖片
-const handleFileChange = (event) => {
-  const file = event.target.files[0]
-  if (file) {
-    selectedFile.value = file
-    previewUrl.value = URL.createObjectURL(file)
-    // uploadImage()
-  }
-}
 //上傳圖片
 const uploadImage = async () => {
   const formData = new FormData()
@@ -29,6 +22,23 @@ const uploadImage = async () => {
   // console.log(formData.get('image'))
   await userStore.uploadImage(formData)
 }
+//個人資料
+const getProfile = async () => {
+  await userStore.getProfile()
+}
+//選擇上傳圖片
+const handleFileChange = async (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    selectedFile.value = file
+    previewUrl.value = URL.createObjectURL(file)
+    await uploadImage()
+    getProfile()
+  }
+}
+onMounted(() => {
+  getProfile()
+})
 </script>
 
 <template>
@@ -47,7 +57,7 @@ const uploadImage = async () => {
         />
         <!-- 個人圖片 -->
         <img
-          src="https://placehold.co/150x150/png"
+          :src="profile.imageUrl"
           class="rounded-circle object-fit-cover"
           alt="avatar"
           width="150"
@@ -68,8 +78,8 @@ const uploadImage = async () => {
           accept="image/*"
           @change="handleFileChange"
         />
-        <h3 class="text-secondary mt-3">我是來自東方的龍</h3>
-        <small class="text-body-tertiary">@taiwan1</small>
+        <h3 class="text-secondary mt-3">{{ profile.name }}</h3>
+        <small class="text-body-tertiary">@{{ profile.id }}</small>
       </div>
       <!-- 切換Tab -->
       <ul class="nav nav-underline nav-fill">
@@ -80,13 +90,13 @@ const uploadImage = async () => {
             data-bs-toggle="tab"
             data-bs-target="#followed"
           >
-            <div class="fw-bold text-secondary mb-1">10</div>
+            <div class="fw-bold text-secondary mb-1">{{ profile.followedCount }}</div>
             <div class="text-body-tertiary">追蹤者</div>
           </button>
         </li>
         <li class="nav-item">
           <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#article">
-            <div class="fw-bold text-secondary mb-1">10</div>
+            <div class="fw-bold text-secondary mb-1">{{ profile.articleCount }}</div>
             <div class="text-body-tertiary">文章</div>
           </button>
         </li>
@@ -116,7 +126,12 @@ const uploadImage = async () => {
         </div>
         <!-- 文章 -->
         <div class="tab-pane pt-3" id="article" role="tabpanel" tabindex="0">
-          <!-- <ArticleCard /> -->
+          <ProfileArticle
+            v-for="(article, index) of profile.articleList"
+            :key="index"
+            :imageUrl="profile.imageUrl"
+            v-bind="article"
+          />
         </div>
       </div>
     </div>

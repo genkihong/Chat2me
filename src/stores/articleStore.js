@@ -1,5 +1,9 @@
 import {
   apiAddArticle,
+  apiAddFavor,
+  apiAddLike,
+  apiDelFavor,
+  apiDelLike,
   apiGetArticle,
   apiLatestArticleList,
   apiPopularArticleList,
@@ -112,11 +116,73 @@ export const useArticleStore = defineStore('article', () => {
       })
     }
   }
+  //按讚
+  const addLike = async (id) => {
+    try {
+      const res = await apiAddLike({ post_id: id })
+      toast.success(res.data.message, {
+        theme: 'colored',
+      })
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
+    }
+  }
+  //取消讚
+  const deleteLike = async (id) => {
+    try {
+      const res = await apiDelLike(id)
+      if (res.data.status) {
+        toast.success('取消讚成功', {
+          theme: 'colored',
+        })
+      }
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
+    }
+  }
+  //收藏文章
+  const addFavor = async (id) => {
+    try {
+      const res = await apiAddFavor({ post_id: id })
+      if (res.data.status) {
+        toast.success('已收藏文章', {
+          theme: 'colored',
+        })
+      }
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
+    }
+  }
+  //取消收藏
+  const deleteFavor = async (id) => {
+    try {
+      const res = await apiDelFavor(id)
+      if (res.data.status) {
+        toast.success('取消收藏成功', {
+          theme: 'colored',
+        })
+      }
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        theme: 'colored',
+      })
+    }
+  }
   return {
     imageUrl,
     article,
     newArticle,
     articleList,
+    addLike,
+    deleteLike,
+    addFavor,
+    deleteFavor,
     getArticle,
     uploadImage,
     getPopularArticleList,

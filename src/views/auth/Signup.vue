@@ -92,7 +92,7 @@ const signup = async () => {
                 </div>
               </form>
               <div class="text-center">
-                已經有帳號 ? <router-link to="/login">請點此登入</router-link>
+                已經有帳號 ? <RouterLink to="/login">請點此登入</RouterLink>
               </div>
             </div>
           </div>

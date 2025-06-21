@@ -54,7 +54,7 @@ const router = createRouter({
           component: () => import('../views/Popular.vue'),
         },
         {
-          path: 'article/:id', //熱門看板
+          path: 'article/:id', //文章內容
           name: 'Article',
           component: () => import('../views/article/Index.vue'),
         },

@@ -1,7 +1,11 @@
 export const getIconUrl = (name) => {
   return new URL(`../assets/images/${name}.png`, import.meta.url).href
 }
-
+export const getImageUrl = (url) => {
+  return url.includes('uploads')
+    ? import.meta.env.VITE_API_URL.concat(`/${url}`)
+    : `https://placehold.co/150x150/png`
+}
 export const mapIcon = (forumName) => {
   const forumList = [
     {

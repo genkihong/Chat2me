@@ -1,6 +1,7 @@
 <script setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useForumStore } from '@/stores/forumStore'
+import { useUserStore } from '@/stores/userStore'
 import { getIconUrl } from '@/utils'
 import { Offcanvas } from 'bootstrap'
 import { storeToRefs } from 'pinia'
@@ -9,8 +10,11 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const { userInfo, isLoggedIn } = storeToRefs(authStore)
 const forumStore = useForumStore()
-const { forumList } = storeToRefs(forumStore)
+const { forum } = storeToRefs(forumStore)
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
 
 const offcanvas = ref(null)
 let bsOffcanvas = null
@@ -26,6 +30,9 @@ const logout = () => {
 
 onMounted(() => {
   bsOffcanvas = new Offcanvas(offcanvas.value)
+  if (isLoggedIn.value) {
+    userStore.getUser(userInfo.value.id)
+  }
 })
 </script>
 
@@ -43,20 +50,20 @@ onMounted(() => {
           <img src="@/assets/images/burger.png" alt="burger" width="24" height="24" />
         </button>
         <!-- Logo -->
-        <router-link to="/" class="p-1 me-0">
+        <RouterLink to="/" class="p-1 me-0">
           <img src="@/assets/images/logo.svg" alt="chat2me" />
-        </router-link>
+        </RouterLink>
 
         <div class="collapse navbar-collapse" id="navbarContent">
           <!-- 桌機版選單 -->
           <ul class="navbar-nav ms-auto">
             <!-- 登入後 -->
-            <template v-if="authStore.isLoggedIn">
+            <template v-if="isLoggedIn">
               <!-- 新增文章 -->
               <li class="nav-item me-3">
-                <router-link to="/article/new" class="nav-link">
+                <RouterLink to="/article/new" class="nav-link">
                   <img src="@/assets/images/plus.png" alt="plus" width="24" height="24" />
-                </router-link>
+                </RouterLink>
               </li>
               <!-- 通知 -->
               <li class="nav-item dropdown me-3">
@@ -158,16 +165,16 @@ onMounted(() => {
               <li class="nav-item dropdown">
                 <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                   <img
-                    src="@/assets/images/avatar06.png"
+                    :src="user.imageUrl"
                     alt="avatar"
-                    class="rounded-circle"
-                    width="24"
-                    height="24"
+                    class="rounded-circle object-fit-cover"
+                    width="28"
+                    height="28"
                   />
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end settings border-light-subtle">
                   <li>
-                    <router-link class="dropdown-item" to="/user/profile">
+                    <RouterLink class="dropdown-item" to="/user/profile">
                       <img
                         src="@/assets/images/wall.png"
                         class="me-2"
@@ -176,10 +183,10 @@ onMounted(() => {
                         height="16"
                       />
                       <span class="align-middle">我的個人牆</span>
-                    </router-link>
+                    </RouterLink>
                   </li>
-                  <li>
-                    <router-link class="dropdown-item" to="/user/message">
+                  <!-- <li>
+                    <RouterLink class="dropdown-item" to="/user/message">
                       <img
                         src="@/assets/images/comment.png"
                         class="me-2"
@@ -188,10 +195,10 @@ onMounted(() => {
                         height="16"
                       />
                       <span class="align-middle">我的訊息</span>
-                    </router-link>
-                  </li>
+                    </RouterLink>
+                  </li> -->
                   <li>
-                    <router-link class="dropdown-item" to="/user/follow">
+                    <RouterLink class="dropdown-item" to="/user/follow">
                       <img
                         src="@/assets/images/followed.png"
                         class="me-2"
@@ -200,10 +207,10 @@ onMounted(() => {
                         height="16"
                       />
                       <span class="align-middle">我的追蹤</span>
-                    </router-link>
+                    </RouterLink>
                   </li>
                   <li>
-                    <router-link class="dropdown-item" to="/user/favorite">
+                    <RouterLink class="dropdown-item" to="/user/favorite">
                       <img
                         src="@/assets/images/bookmark-outline.png"
                         class="me-2"
@@ -212,10 +219,10 @@ onMounted(() => {
                         height="16"
                       />
                       <span class="align-middle">我的收藏</span>
-                    </router-link>
+                    </RouterLink>
                   </li>
                   <li>
-                    <router-link class="dropdown-item" to="/user/settings">
+                    <RouterLink class="dropdown-item" to="/user/settings">
                       <img
                         src="@/assets/images/setting.png"
                         class="me-2"
@@ -224,7 +231,7 @@ onMounted(() => {
                         height="16"
                       />
                       <span class="align-middle">個人設定</span>
-                    </router-link>
+                    </RouterLink>
                   </li>
                   <li><hr class="dropdown-divider" /></li>
                   <li>
@@ -244,7 +251,7 @@ onMounted(() => {
             </template>
             <!-- 未登入 -->
             <li class="nav-item" v-else>
-              <router-link to="/login" class="btn btn-secondary rounded-1">登入</router-link>
+              <RouterLink to="/login" class="btn btn-secondary rounded-1">登入</RouterLink>
             </li>
           </ul>
         </div>
@@ -269,12 +276,12 @@ onMounted(() => {
       <div class="offcanvas-body">
         <ul class="navbar-nav ms-auto">
           <!-- 登入後 -->
-          <template v-if="authStore.isLoggedIn">
+          <template v-if="isLoggedIn">
             <!-- 新增文章 -->
             <li class="nav-item me-3">
-              <router-link to="/article/new" class="nav-link" @click="close">
+              <RouterLink to="/article/new" class="nav-link" @click="close">
                 <img src="@/assets/images/plus.png" alt="plus" width="24" height="24" />
-              </router-link>
+              </RouterLink>
             </li>
             <!-- 通知 -->
             <li class="nav-item dropdown me-3">
@@ -379,7 +386,7 @@ onMounted(() => {
             <li class="nav-item dropdown">
               <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img
-                  src="@/assets/images/avatar06.png"
+                  :src="user.imageUrl"
                   alt="avatar"
                   class="rounded-circle"
                   width="24"
@@ -389,7 +396,7 @@ onMounted(() => {
               <!-- 下拉選單 -->
               <ul class="dropdown-menu settings border-light-subtle">
                 <li>
-                  <router-link class="dropdown-item" to="/user/profile" @click="close">
+                  <RouterLink class="dropdown-item" to="/user/profile" @click="close">
                     <img
                       src="@/assets/images/wall.png"
                       class="me-2"
@@ -398,10 +405,10 @@ onMounted(() => {
                       height="16"
                     />
                     <span class="align-middle">我的個人牆</span>
-                  </router-link>
+                  </RouterLink>
                 </li>
-                <li>
-                  <router-link class="dropdown-item" to="/user/message" @click="close">
+                <!-- <li>
+                  <RouterLink class="dropdown-item" to="/user/message" @click="close">
                     <img
                       src="@/assets/images/comment.png"
                       class="me-2"
@@ -410,10 +417,10 @@ onMounted(() => {
                       height="16"
                     />
                     <span class="align-middle">我的訊息</span>
-                  </router-link>
-                </li>
+                  </RouterLink>
+                </li> -->
                 <li>
-                  <router-link class="dropdown-item" to="/user/follow" @click="close">
+                  <RouterLink class="dropdown-item" to="/user/follow" @click="close">
                     <img
                       src="@/assets/images/followed.png"
                       class="me-2"
@@ -422,10 +429,10 @@ onMounted(() => {
                       height="16"
                     />
                     <span class="align-middle">我的追蹤</span>
-                  </router-link>
+                  </RouterLink>
                 </li>
                 <li>
-                  <router-link class="dropdown-item" to="/user/favorite" @click="close">
+                  <RouterLink class="dropdown-item" to="/user/favorite" @click="close">
                     <img
                       src="@/assets/images/bookmark-outline.png"
                       class="me-2"
@@ -434,10 +441,10 @@ onMounted(() => {
                       height="16"
                     />
                     <span class="align-middle">我的收藏</span>
-                  </router-link>
+                  </RouterLink>
                 </li>
                 <li>
-                  <router-link class="dropdown-item" to="/user/settings" @click="close">
+                  <RouterLink class="dropdown-item" to="/user/settings" @click="close">
                     <img
                       src="@/assets/images/setting.png"
                       class="me-2"
@@ -446,7 +453,7 @@ onMounted(() => {
                       height="16"
                     />
                     <span class="align-middle">個人設定</span>
-                  </router-link>
+                  </RouterLink>
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
@@ -466,28 +473,28 @@ onMounted(() => {
           </template>
           <!-- 未登入 -->
           <li class="nav-item mb-3" v-else>
-            <router-link to="/login" class="btn btn-secondary rounded-1" @click="close"
-              >登入</router-link
+            <RouterLink to="/login" class="btn btn-secondary rounded-1" @click="close"
+              >登入</RouterLink
             >
           </li>
         </ul>
         <div class="list-group rounded-0">
-          <router-link
+          <RouterLink
             :to="{ path: '/forums' }"
             class="list-group-item list-group-item-action p-3"
             @click="close"
           >
             <img src="@/assets/images/board.png" class="me-2" alt="board" width="20" height="20" />
             <span class="align-middle">所有看板</span>
-          </router-link>
-          <router-link
+          </RouterLink>
+          <RouterLink
             :to="{ path: '/popular' }"
             class="list-group-item list-group-item-action p-3"
             @click="close"
           >
             <img src="@/assets/images/hot.png" class="me-2" alt="hot" width="20" height="20" />
             <span class="align-middle">即時熱門看板</span>
-          </router-link>
+          </RouterLink>
         </div>
         <div class="bg-dark p-3">
           <small class="text-secondary">即時熱門看板</small>
@@ -497,13 +504,13 @@ onMounted(() => {
           <a
             href="#"
             class="list-group-item list-group-item-action p-3"
-            v-for="item in forumList"
+            v-for="item in forum.all"
             :key="item.forum_id"
           >
             <img :src="getIconUrl(item.icon)" class="me-3" alt="icon" width="20" height="20" />
             <span class="align-middle">{{ item.forum_name }}</span>
           </a>
-          <!-- <router-link
+          <!-- <RouterLink
                 to="#"
                 class="list-group-item list-group-item-action p-3"
                 v-for="item in sidebarItems"
@@ -511,7 +518,7 @@ onMounted(() => {
               >
                 <img :src="item.icon" class="me-2" alt="" width="20" />
                 <span class="align-middle">{{ item.title }}</span>
-              </router-link> -->
+              </RouterLink> -->
         </div>
       </div>
     </div>

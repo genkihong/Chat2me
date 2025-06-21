@@ -1,4 +1,5 @@
 import { apiForgetPassword, apiLogin, apiResetPassword, apiSignup } from '@/api/auth'
+import { jwtDecode } from 'jwt-decode'
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -8,7 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
   const route = useRoute()
   const router = useRouter()
   const token = ref(localStorage.getItem('token') ?? null)
-  const user = reactive({
+  const userInfo = reactive({
     id: JSON.parse(localStorage.getItem('user'))?.id || null,
     name: JSON.parse(localStorage.getItem('user'))?.name || null,
     // email: JSON.parse(localStorage.getItem('user'))?.email || null,
@@ -39,7 +40,8 @@ export const useAuthStore = defineStore('auth', () => {
       const res = await apiLogin(data)
       token.value = res.data.data.token
       //取得使用者資訊
-      const payload = JSON.parse(window.atob(token.value.split('.')[1]))
+      // const payload = JSON.parse(window.atob(token.value.split('.')[1]))
+      const payload = jwtDecode(token.value)
 
       user.id = payload.id
       user.name = payload.name
@@ -47,7 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       //寫入 localStorage
       localStorage.setItem('token', token.value)
-      localStorage.setItem('user', JSON.stringify(user))
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
 
       toast.success(res.data.message, {
         theme: 'colored',
@@ -63,10 +65,10 @@ export const useAuthStore = defineStore('auth', () => {
   //登出
   const logout = () => {
     token.value = null
-    user.id = null
-    user.name = null
+    userInfo.id = null
+    userInfo.name = null
     localStorage.removeItem('token')
-    localStorage.removeItem('user')
+    localStorage.removeItem('userInfo')
     router.push('/')
   }
   //忘記密碼
@@ -92,7 +94,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
   return {
-    user,
+    userInfo,
     token,
     isLoggedIn,
     signup,

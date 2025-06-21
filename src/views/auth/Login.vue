@@ -46,14 +46,14 @@ const login = async () => {
                   />
                 </div>
                 <div class="text-end mb-3">
-                  <router-link to="/forget-password" class="text-decoration-none">
+                  <RouterLink to="/forget-password" class="text-decoration-none">
                     忘記密碼 ?
-                  </router-link>
+                  </RouterLink>
                 </div>
                 <button type="submit" class="btn btn-custom btn-lg w-100 rounded-1">登入</button>
               </form>
               <div class="text-center">
-                還沒有帳號嗎 ? <router-link to="/signup">請點此註冊</router-link>
+                還沒有帳號嗎 ? <RouterLink to="/signup">請點此註冊</RouterLink>
               </div>
             </div>
           </div>

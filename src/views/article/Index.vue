@@ -20,7 +20,7 @@ onMounted(() => {
     <div class="card-body">
       <div class="d-flex align-items-center border-bottom border-1 pb-3 mb-4">
         <!-- 看板圖示 -->
-        <div class="rounded-circle opacity-50 bg-dark forum-icon d-flex align-items-center me-3">
+        <div class="rounded-circle opacity-50 bg-dark icon-bg d-flex align-items-center me-3">
           <img :src="getIconUrl(article.icon)" class="mx-auto" alt="image" width="24" height="24" />
         </div>
         <div class="d-flex">

@@ -3,6 +3,10 @@ import { getIconUrl } from '@/utils'
 import { computed } from 'vue'
 
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -17,6 +21,10 @@ const props = defineProps({
     required: false,
   },
 })
+const emit = defineEmits(['addFollow'])
+const onFollow = (id) => {
+  emit('addFollow', id)
+}
 const btnText = computed(() => {
   return props.isFllowed ? '已追蹤' : '追蹤'
 })
@@ -24,18 +32,22 @@ const btnText = computed(() => {
 
 <template>
   <div class="d-flex align-items-center mb-3">
-    <div class="rounded-circle bg-dark-subtle forum-icon d-flex align-items-center me-3">
+    <div class="rounded-circle bg-dark-subtle icon-bg d-flex align-items-center me-3">
       <img :src="getIconUrl(icon)" class="mx-auto" alt="image" width="24" height="24" />
     </div>
     <h6 class="text-secondary mb-0 me-auto">{{ title }}</h6>
-    <button class="btn btn-sm" :class="[isFllowed ? 'btn-followed' : 'btn-custom']">
+    <button
+      class="btn btn-sm"
+      :class="[isFllowed ? 'btn-followed' : 'btn-custom']"
+      @click="onFollow(id)"
+    >
       {{ btnText }}
     </button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.forum-icon {
+.icon-bg {
   width: 32px;
   height: 32px;
 }

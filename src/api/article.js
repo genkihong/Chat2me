@@ -19,14 +19,14 @@ export const apiUpdateArticle = (id) => http.put(`/article/${id}`)
 //刪除文章
 export const apiDelArticle = (id) => http.delete(`/article/${id}`)
 //按讚
-export const apiAddLikeArticle = (data) => http.post('/article/like', data)
+export const apiAddLike = (data) => http.post('/article/like', data)
 //取消讚
-export const apiDelLikeArticle = (id) => http.delete(`/article/like/${id}`)
+export const apiDelLike = (id) => http.delete(`/article/like/${id}`)
 //收藏文章
-export const apiAddFavorArticle = (data) => http.post('/article/like', data)
+export const apiAddFavor = (data) => http.post('/article/collection', data)
 //取消收藏
-export const apiDelFavorArticle = (id) => http.delete(`/article/like/${id}`)
+export const apiDelFavor = (id) => http.delete(`/article/collection/${id}`)
 //檢舉文章
-export const apiReportArticle = (data) => http.post('/article/report', data)
+export const apiReport = (data) => http.post('/article/report', data)
 //隱藏文章
-export const apiHideArticle = (data) => http.post('/article/hide', data)
+export const apiHide = (data) => http.post('/article/hide', data)

@@ -1,12 +1,14 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useUserStore } from '@/stores/userStore'
 import { useAuthStore } from '@/stores/authStore'
-import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/userStore'
 import DOMPurify from 'dompurify'
+import { storeToRefs } from 'pinia'
+import { computed, onMounted, ref } from 'vue'
 
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+const authStore = useAuthStore()
+const { userInfo } = storeToRefs(authStore)
 
 const fileInput = ref(null)
 const selectedFile = ref(null)
@@ -18,14 +20,6 @@ const sanitized = computed(() => DOMPurify.sanitize(user.value.description || ''
 const triggerFileInput = () => {
   fileInput.value.click()
 }
-//選擇上傳圖片
-const handleFileChange = (event) => {
-  const file = event.target.files[0]
-  if (file) {
-    selectedFile.value = file
-    previewUrl.value = URL.createObjectURL(file)
-  }
-}
 //上傳圖片
 const uploadImage = async () => {
   const formData = new FormData()
@@ -33,11 +27,19 @@ const uploadImage = async () => {
   // console.log(formData.get('image'))
   await userStore.uploadImage(formData)
 }
-//取得資料
+//個人資料
 const getUser = async () => {
-  const authStore = useAuthStore()
-  const userId = authStore.user.id
-  await userStore.getUser(userId)
+  await userStore.getUser(userInfo.value.id)
+}
+//選擇上傳圖片
+const handleFileChange = async (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    selectedFile.value = file
+    previewUrl.value = URL.createObjectURL(file)
+    await uploadImage()
+    getUser()
+  }
 }
 //更新資料
 const updateUser = async () => {
@@ -49,13 +51,14 @@ const updateUser = async () => {
 }
 //儲存設定
 const handleSubmit = async () => {
+  await updateUser()
+  getUser()
   //有上傳圖片時
-  if (selectedFile.value) {
-    await Promise.allSettled([uploadImage(), updateUser()])
-  } else {
-    await updateUser()
-  }
-  await getUser()
+  // if (selectedFile.value) {
+  //   await Promise.allSettled([uploadImage(), updateUser()])
+  // } else {
+  //   await updateUser()
+  // }
 }
 onMounted(() => {
   getUser()
