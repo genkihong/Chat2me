@@ -43,8 +43,8 @@ export const useAuthStore = defineStore('auth', () => {
       // const payload = JSON.parse(window.atob(token.value.split('.')[1]))
       const payload = jwtDecode(token.value)
 
-      user.id = payload.id
-      user.name = payload.name
+      userInfo.id = payload.id
+      userInfo.name = payload.name
       // user.email = payload.email
 
       //寫入 localStorage
@@ -57,9 +57,13 @@ export const useAuthStore = defineStore('auth', () => {
       const redirectPath = route.query.redirect || '/'
       router.push(redirectPath)
     } catch (error) {
-      toast.error(error.response.data.message, {
-        theme: 'colored',
-      })
+      if (error.response) {
+        toast.error(error.response.data.message, {
+          theme: 'colored',
+        })
+      } else {
+        console.log(error)
+      }
     }
   }
   //登出
