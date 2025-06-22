@@ -1,17 +1,21 @@
 import { apiForgetPassword, apiLogin, apiResetPassword, apiSignup } from '@/api/auth'
+import { useUserStore } from '@/stores/userStore'
 import { jwtDecode } from 'jwt-decode'
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 
 export const useAuthStore = defineStore('auth', () => {
+  const userStore = useUserStore()
+  const { user } = storeToRefs(userStore)
   const route = useRoute()
   const router = useRouter()
   const token = ref(localStorage.getItem('token') ?? null)
   const userInfo = reactive({
     id: JSON.parse(localStorage.getItem('user'))?.id || null,
     name: JSON.parse(localStorage.getItem('user'))?.name || null,
+    imageUrl: JSON.parse(localStorage.getItem('user'))?.imageUrl || null,
     // email: JSON.parse(localStorage.getItem('user'))?.email || null,
   })
 
@@ -39,16 +43,16 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const res = await apiLogin(data)
       token.value = res.data.data.token
-      //取得使用者資訊
-      // const payload = JSON.parse(window.atob(token.value.split('.')[1]))
-      const payload = jwtDecode(token.value)
-
-      userInfo.id = payload.id
-      userInfo.name = payload.name
-      // user.email = payload.email
-
       //寫入 localStorage
       localStorage.setItem('token', token.value)
+      //取得使用者資訊
+      const payload = jwtDecode(token.value)
+      // const payload = JSON.parse(window.atob(token.value.split('.')[1]))
+      userInfo.id = payload.id
+      userInfo.name = payload.name
+      await userStore.getUser(userInfo.id)
+      userInfo.imageUrl = user.value.imageUrl
+
       localStorage.setItem('userInfo', JSON.stringify(userInfo))
 
       toast.success(res.data.message, {
@@ -71,6 +75,7 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = null
     userInfo.id = null
     userInfo.name = null
+    userInfo.imageUrl = null
     localStorage.removeItem('token')
     localStorage.removeItem('userInfo')
     router.push('/')

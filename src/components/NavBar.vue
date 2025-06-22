@@ -1,7 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useForumStore } from '@/stores/forumStore'
-import { useUserStore } from '@/stores/userStore'
 import { getIconUrl } from '@/utils'
 import { Offcanvas } from 'bootstrap'
 import { storeToRefs } from 'pinia'
@@ -10,11 +9,9 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const authStore = useAuthStore()
-const { userInfo, isLoggedIn } = storeToRefs(authStore)
+const { isLoggedIn, userInfo } = storeToRefs(authStore)
 const forumStore = useForumStore()
 const { forum } = storeToRefs(forumStore)
-const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
 
 const offcanvas = ref(null)
 let bsOffcanvas = null
@@ -30,9 +27,6 @@ const logout = () => {
 
 onMounted(() => {
   bsOffcanvas = new Offcanvas(offcanvas.value)
-  if (isLoggedIn.value) {
-    userStore.getUser(userInfo.value.id)
-  }
 })
 </script>
 
@@ -165,7 +159,7 @@ onMounted(() => {
               <li class="nav-item dropdown">
                 <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                   <img
-                    :src="user.imageUrl"
+                    :src="userInfo.imageUrl"
                     alt="avatar"
                     class="rounded-circle object-fit-cover"
                     width="28"
@@ -386,7 +380,7 @@ onMounted(() => {
             <li class="nav-item dropdown">
               <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img
-                  :src="user.imageUrl"
+                  :src="userInfo.imageUrl"
                   alt="avatar"
                   class="rounded-circle"
                   width="24"
