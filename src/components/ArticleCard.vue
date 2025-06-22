@@ -1,6 +1,7 @@
 <script setup>
 import { getIconUrl } from '@/utils'
 import { computed, ref } from 'vue'
+import { toast } from 'vue3-toastify'
 
 const props = defineProps({
   id: {
@@ -35,6 +36,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isLoggedIn: {
+    type: Boolean,
+    required: true,
+  },
 })
 const emit = defineEmits(['handleLike', 'handleFavor'])
 
@@ -48,10 +53,22 @@ const bookmark = computed(() => {
   return toggleFavor.value ? getIconUrl('bookmark') : getIconUrl('bookmark-outline')
 })
 const handleLike = (id) => {
+  if (!props.isLoggedIn) {
+    toast.info('請先登入', {
+      theme: 'colored',
+    })
+    return
+  }
   toggleLike.value = !toggleLike.value
   emit('handleLike', id, toggleLike.value)
 }
 const handleFavor = (id) => {
+  if (!props.isLoggedIn) {
+    toast.info('請先登入', {
+      theme: 'colored',
+    })
+    return
+  }
   toggleFavor.value = !toggleFavor.value
   emit('handleFavor', id, toggleFavor.value)
 }

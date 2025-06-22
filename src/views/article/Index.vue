@@ -1,13 +1,17 @@
 <script setup>
 import { useArticleStore } from '@/stores/articleStore'
+import { useAuthStore } from '@/stores/authStore'
 import { getIconUrl } from '@/utils'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { toast } from 'vue3-toastify'
 
 const route = useRoute()
 const articleStore = useArticleStore()
 const { article } = storeToRefs(articleStore)
+const authStore = useAuthStore()
+const { isLoggedIn } = storeToRefs(authStore)
 
 const toggleLike = ref(false)
 const toggleFavor = ref(false)
@@ -20,7 +24,13 @@ const bookmark = computed(() => {
   return toggleFavor.value ? getIconUrl('bookmark') : getIconUrl('bookmark-outline')
 })
 
-const onLike = async () => {
+const handleLike = async () => {
+  if (!isLoggedIn.value) {
+    toast.info('請先登入', {
+      theme: 'colored',
+    })
+    return
+  }
   toggleLike.value = !toggleLike.value
   if (toggleLike.value) {
     await articleStore.addLike(id.value)
@@ -29,7 +39,13 @@ const onLike = async () => {
   }
   articleStore.getArticle(id.value)
 }
-const onFavor = async () => {
+const handleFavor = async () => {
+  if (!isLoggedIn.value) {
+    toast.info('請先登入', {
+      theme: 'colored',
+    })
+    return
+  }
   toggleFavor.value = !toggleFavor.value
   if (toggleFavor.value) {
     await articleStore.addFavor(id.value)
@@ -73,7 +89,7 @@ onMounted(() => {
       <div class="text-secondary mb-4" v-html="article.articleContent"></div>
       <div class="article-footer d-flex align-items-center text-secondary">
         <!-- 按讚數 -->
-        <div class="d-flex align-items-center me-5" role="button" @click="onLike">
+        <div class="d-flex align-items-center me-5" role="button" @click="handleLike">
           <img :src="like" class="me-1" alt="heart" width="20" />
           <span>{{ article.count.like }}</span>
         </div>
@@ -83,7 +99,7 @@ onMounted(() => {
           <span>{{ article.count.comment }}</span>
         </div>
         <!-- 收藏數 -->
-        <div class="d-flex align-items-center" role="button" @click="onFavor">
+        <div class="d-flex align-items-center" role="button" @click="handleFavor">
           <img :src="bookmark" class="me-1" alt="bookmark" width="20" />
           <span>{{ article.count.collect }}</span>
         </div>

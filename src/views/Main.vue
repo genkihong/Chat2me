@@ -1,11 +1,14 @@
 <script setup>
 import ArticleCard from '@/components/ArticleCard.vue'
 import { useArticleStore } from '@/stores/articleStore'
+import { useAuthStore } from '@/stores/authStore'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 
 const articleStore = useArticleStore()
 const { articleList } = storeToRefs(articleStore)
+const authStore = useAuthStore()
+const { isLoggedIn } = storeToRefs(authStore)
 
 const handleLike = async (id, toggleLike) => {
   if (toggleLike) {
@@ -51,6 +54,7 @@ onMounted(async () => {
         v-for="item of articleList.popular"
         :key="item.id"
         v-bind="item"
+        :isLoggedIn="isLoggedIn"
         @handle-like="handleLike"
         @handle-favor="handleFavor"
       />
@@ -61,6 +65,7 @@ onMounted(async () => {
         v-for="item of articleList.latest"
         :key="item.id"
         v-bind="item"
+        :isLoggedIn="isLoggedIn"
         @handle-like="handleLike"
         @handle-favor="handleFavor"
       />
