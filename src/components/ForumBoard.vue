@@ -1,6 +1,7 @@
 <script setup>
 import { getIconUrl } from '@/utils'
 import { computed } from 'vue'
+import { toast } from 'vue3-toastify'
 
 const props = defineProps({
   id: {
@@ -20,9 +21,19 @@ const props = defineProps({
     default: false,
     required: false,
   },
+  isLoggedIn: {
+    type: Boolean,
+    required: true,
+  },
 })
 const emit = defineEmits(['addFollow'])
 const addFollow = (id) => {
+  if (!props.isLoggedIn) {
+    toast.info('請先登入', {
+      theme: 'colored',
+    })
+    return
+  }
   emit('addFollow', id)
 }
 const btnText = computed(() => {

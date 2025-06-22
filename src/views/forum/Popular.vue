@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 
 const authStore = useAuthStore()
-const { userInfo } = storeToRefs(authStore)
+const { userInfo, isLoggedIn } = storeToRefs(authStore)
 const forumStore = useForumStore()
 const { forum } = storeToRefs(forumStore)
 
@@ -30,6 +30,7 @@ onMounted(() => {
         :icon="item.icon"
         :is-fllowed="false"
         :id="item.forum_id"
+        :isLoggedIn="isLoggedIn"
         @add-follow="addFollow"
       />
     </div>
