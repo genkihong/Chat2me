@@ -68,11 +68,11 @@ onMounted(() => {
   <section class="bg-dark" style="min-height: 100vh">
     <div class="container">
       <div class="row">
-        <!-- Sidebar -->
+        <!-- Sidemenu -->
         <div class="col-lg-2 d-none d-lg-block">
           <div class="sidemenu position-sticky">
             <div class="list-group rounded-0">
-              <RouterLink to="forums" class="list-group-item list-group-item-action p-3">
+              <RouterLink to="/forum/all" class="list-group-item list-group-item-action p-3">
                 <img
                   src="@/assets/images/board.png"
                   class="me-2"
@@ -82,7 +82,7 @@ onMounted(() => {
                 />
                 <span class="align-middle">所有看板</span>
               </RouterLink>
-              <RouterLink to="popular" class="list-group-item list-group-item-action p-3">
+              <RouterLink to="/forum/popular" class="list-group-item list-group-item-action p-3">
                 <img src="@/assets/images/hot.png" class="me-2" alt="hot" width="20" height="20" />
                 <span class="align-middle">即時熱門看板</span>
               </RouterLink>

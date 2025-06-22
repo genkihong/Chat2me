@@ -44,14 +44,14 @@ const router = createRouter({
           component: () => import('../views/Main.vue'),
         },
         {
-          path: 'forums', //所有看板
+          path: 'forum/all', //所有看板
           name: 'Forums',
-          component: () => import('../views/Forums.vue'),
+          component: () => import('../views/forum/All.vue'),
         },
         {
-          path: 'popular', //熱門看板
+          path: 'forum/popular', //熱門看板
           name: 'Popular',
-          component: () => import('../views/Popular.vue'),
+          component: () => import('../views/forum/Popular.vue'),
         },
         {
           path: 'article/:id', //文章內容

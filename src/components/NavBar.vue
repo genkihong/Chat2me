@@ -472,9 +472,10 @@ onMounted(() => {
             >
           </li>
         </ul>
+        <!-- Sidemenu -->
         <div class="list-group rounded-0">
           <RouterLink
-            :to="{ path: '/forums' }"
+            :to="{ path: '/forum/all' }"
             class="list-group-item list-group-item-action p-3"
             @click="close"
           >
@@ -482,7 +483,7 @@ onMounted(() => {
             <span class="align-middle">所有看板</span>
           </RouterLink>
           <RouterLink
-            :to="{ path: '/popular' }"
+            :to="{ path: '/forum/popular' }"
             class="list-group-item list-group-item-action p-3"
             @click="close"
           >

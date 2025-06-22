@@ -22,7 +22,7 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['addFollow'])
-const onFollow = (id) => {
+const addFollow = (id) => {
   emit('addFollow', id)
 }
 const btnText = computed(() => {
@@ -39,7 +39,7 @@ const btnText = computed(() => {
     <button
       class="btn btn-sm"
       :class="[isFllowed ? 'btn-followed' : 'btn-custom']"
-      @click="onFollow(id)"
+      @click="addFollow(id)"
     >
       {{ btnText }}
     </button>

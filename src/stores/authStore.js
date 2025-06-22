@@ -13,10 +13,9 @@ export const useAuthStore = defineStore('auth', () => {
   const router = useRouter()
   const token = ref(localStorage.getItem('token') ?? null)
   const userInfo = reactive({
-    id: JSON.parse(localStorage.getItem('user'))?.id || null,
-    name: JSON.parse(localStorage.getItem('user'))?.name || null,
-    imageUrl: JSON.parse(localStorage.getItem('user'))?.imageUrl || null,
-    // email: JSON.parse(localStorage.getItem('user'))?.email || null,
+    id: JSON.parse(localStorage.getItem('userInfo'))?.id || null,
+    name: JSON.parse(localStorage.getItem('userInfo'))?.name || null,
+    imageUrl: JSON.parse(localStorage.getItem('userInfo'))?.imageUrl || null,
   })
 
   const isLoggedIn = computed(() => {

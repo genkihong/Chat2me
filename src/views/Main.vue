@@ -7,11 +7,19 @@ import { onMounted } from 'vue'
 const articleStore = useArticleStore()
 const { articleList } = storeToRefs(articleStore)
 
-const addLike = (id) => {
-  articleStore.addLike(id)
+const handleLike = async (id, toggleLike) => {
+  if (toggleLike) {
+    await articleStore.addLike(id)
+  } else {
+    await articleStore.deleteLike(id)
+  }
 }
-const addFavor = (id) => {
-  articleStore.addFavor(id)
+const handleFavor = async (id, toggleFavor) => {
+  if (toggleFavor) {
+    await articleStore.addFavor(id)
+  } else {
+    await articleStore.deleteFavor(id)
+  }
 }
 onMounted(async () => {
   await Promise.allSettled([
@@ -40,21 +48,21 @@ onMounted(async () => {
     <!-- 熱門 -->
     <div class="tab-pane active pt-3" id="hot" role="tabpanel" tabindex="0">
       <ArticleCard
-        v-for="article of articleList.popular"
-        :key="article.id"
-        v-bind="article"
-        @add-like="addLike"
-        @add-favor="addFavor"
+        v-for="item of articleList.popular"
+        :key="item.id"
+        v-bind="item"
+        @handle-like="handleLike"
+        @handle-favor="handleFavor"
       />
     </div>
     <!-- 最新 -->
     <div class="tab-pane pt-3" id="latest" role="tabpanel" tabindex="0">
       <ArticleCard
-        v-for="article of articleList.latest"
-        :key="article.id"
-        v-bind="article"
-        @add-like="addLike"
-        @add-favor="addFavor"
+        v-for="item of articleList.latest"
+        :key="item.id"
+        v-bind="item"
+        @handle-like="handleLike"
+        @handle-favor="handleFavor"
       />
     </div>
   </div>

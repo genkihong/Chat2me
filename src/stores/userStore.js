@@ -22,19 +22,21 @@ export const useUserStore = defineStore('user', () => {
       {
         forumId: 1,
         forumTitle: '',
+        description: '',
+        type: null,
       },
     ],
     articleList: [
       {
-        articleId: 1,
+        articleId: '1',
         forumTitle: '',
         content: '',
       },
     ],
   })
   const profile = reactive({
-    id: 1,
-    articleCount: 0,
+    id: null,
+    articleCount: null,
     articleList: [
       {
         forumTitle: '',
@@ -51,7 +53,7 @@ export const useUserStore = defineStore('user', () => {
         postDate: '',
       },
     ],
-    followedCount: 0,
+    followedCount: null,
     imageUrl: '',
     name: '',
   })

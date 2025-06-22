@@ -1,5 +1,6 @@
 <script setup>
 import { getIconUrl } from '@/utils'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   id: {
@@ -35,12 +36,24 @@ const props = defineProps({
     required: true,
   },
 })
-const emit = defineEmits(['addLike', 'addFavor'])
-const onLike = (id) => {
-  emit('addLike', id)
+const emit = defineEmits(['handleLike', 'handleFavor'])
+
+const toggleLike = ref(false)
+const toggleFavor = ref(false)
+
+const like = computed(() => {
+  return toggleLike.value ? getIconUrl('heart') : getIconUrl('heart-outline')
+})
+const bookmark = computed(() => {
+  return toggleFavor.value ? getIconUrl('bookmark') : getIconUrl('bookmark-outline')
+})
+const handleLike = (id) => {
+  toggleLike.value = !toggleLike.value
+  emit('handleLike', id, toggleLike.value)
 }
-const onFavor = (id) => {
-  emit('addFavor', id)
+const handleFavor = (id) => {
+  toggleFavor.value = !toggleFavor.value
+  emit('handleFavor', id, toggleFavor.value)
 }
 </script>
 
@@ -71,8 +84,8 @@ const onFavor = (id) => {
       </RouterLink>
       <div class="article-footer d-flex align-items-center text-secondary">
         <!-- 按讚數 -->
-        <div class="d-flex align-items-center me-5" role="button" @click="onLike(id)">
-          <img src="@/assets/images/heart-outline.png" class="me-1" alt="heart" width="20" />
+        <div class="d-flex align-items-center me-5" role="button" @click="handleLike(id)">
+          <img :src="like" class="me-1" alt="heart" width="20" />
           <span>{{ count.like }}</span>
         </div>
         <!-- 留言數 -->
@@ -81,8 +94,8 @@ const onFavor = (id) => {
           <span>{{ count.collect }}</span>
         </div>
         <!-- 收藏數 -->
-        <div class="d-flex align-items-center" role="button" @click="onFavor(id)">
-          <img src="@/assets/images/bookmark-outline.png" class="me-1" alt="bookmark" width="20" />
+        <div class="d-flex align-items-center" role="button" @click="handleFavor(id)">
+          <img :src="bookmark" class="me-1" alt="bookmark" width="20" />
           <span>{{ count.comment }}</span>
         </div>
       </div>

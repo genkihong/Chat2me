@@ -2,14 +2,42 @@
 import { useArticleStore } from '@/stores/articleStore'
 import { getIconUrl } from '@/utils'
 import { storeToRefs } from 'pinia'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const articleStore = useArticleStore()
 const { article } = storeToRefs(articleStore)
 
+const toggleLike = ref(false)
+const toggleFavor = ref(false)
+
 const id = computed(() => route.params.id)
+const like = computed(() => {
+  return toggleLike.value ? getIconUrl('heart') : getIconUrl('heart-outline')
+})
+const bookmark = computed(() => {
+  return toggleFavor.value ? getIconUrl('bookmark') : getIconUrl('bookmark-outline')
+})
+
+const onLike = async () => {
+  toggleLike.value = !toggleLike.value
+  if (toggleLike.value) {
+    await articleStore.addLike(id.value)
+  } else {
+    await articleStore.deleteLike(id.value)
+  }
+  articleStore.getArticle(id.value)
+}
+const onFavor = async () => {
+  toggleFavor.value = !toggleFavor.value
+  if (toggleFavor.value) {
+    await articleStore.addFavor(id.value)
+  } else {
+    await articleStore.deleteFavor(id.value)
+  }
+  articleStore.getArticle(id.value)
+}
 onMounted(() => {
   articleStore.getArticle(id.value)
 })
@@ -28,9 +56,9 @@ onMounted(() => {
           <div class="me-3">
             <small class="text-secondary">{{ article.forumTitle }}</small>
           </div>
-          <div>
+          <!-- <div role="button">
             <small class="text-primary">{{ article.followed ? '已追蹤' : '追蹤' }}</small>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- 文章標題 -->
@@ -45,19 +73,19 @@ onMounted(() => {
       <div class="text-secondary mb-4" v-html="article.articleContent"></div>
       <div class="article-footer d-flex align-items-center text-secondary">
         <!-- 按讚數 -->
-        <div class="d-flex align-items-center me-5" role="button">
-          <img src="@/assets/images/heart-outline.png" class="me-1" alt="heart" width="20" />
+        <div class="d-flex align-items-center me-5" role="button" @click="onLike">
+          <img :src="like" class="me-1" alt="heart" width="20" />
           <span>{{ article.count.like }}</span>
         </div>
         <!-- 留言數 -->
         <div class="d-flex align-items-center me-5" role="button">
           <img src="@/assets/images/comment.png" class="me-1" alt="comment" width="20" />
-          <span>{{ article.count.collect }}</span>
+          <span>{{ article.count.comment }}</span>
         </div>
         <!-- 收藏數 -->
-        <div class="d-flex align-items-center" role="button">
-          <img src="@/assets/images/bookmark-outline.png" class="me-1" alt="bookmark" width="20" />
-          <span>{{ article.count.comment }}</span>
+        <div class="d-flex align-items-center" role="button" @click="onFavor">
+          <img :src="bookmark" class="me-1" alt="bookmark" width="20" />
+          <span>{{ article.count.collect }}</span>
         </div>
       </div>
     </div>
